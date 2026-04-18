@@ -1,21 +1,43 @@
-# Next.js template
+# Lowell Is Queer
 
-This is a Next.js template with shadcn/ui.
+A community events calendar celebrating LGBTQIA+ life, community, and culture in and around Lowell, Massachusetts.
 
-## Adding components
+## Features
 
-To add components to your app, run the following command:
+- **Event calendar** powered by Google Calendar API with fuzzy search and pagination
+- **Featured events** via `#featured` tag in event descriptions
+- **Event images** via `#image:` Google Drive links in event descriptions
+- **Dark mode** with system default, manual toggle, and `D` keyboard shortcut
+- **Responsive design** optimized for mobile through desktop
+
+## Tech stack
+
+- [Next.js](https://nextjs.org) (App Router)
+- [Tailwind CSS](https://tailwindcss.com) v4
+- [fuzzysort](https://github.com/farzher/fuzzysort) for client-side search
+- [next-themes](https://github.com/pacocoursey/next-themes) for dark mode
+- [next-mdx-remote](https://github.com/hashicorp/next-mdx-remote) for content
+
+## Getting started
 
 ```bash
-npx shadcn@latest add button
+pnpm install
+cp .env.example .env  # fill in your Google Calendar credentials
+pnpm dev
 ```
 
-This will place the ui components in the `components` directory.
+## Environment variables
 
-## Using components
+| Variable | Description |
+|---|---|
+| `GOOGLE_CALENDAR_API_KEY` | Google Calendar API key |
+| `GOOGLE_CALENDAR_ID` | Calendar ID |
+| `NEXT_PUBLIC_GOOGLE_CALENDAR_ID` | Public calendar ID (for embed/subscribe links) |
+| `NEXT_PUBLIC_EVENT_FORM_URL` | Event submission form URL (optional) |
 
-To use the components in your app, import them as follows:
+## Managing events
 
-```tsx
-import { Button } from "@/components/ui/button";
-```
+Events are managed through Google Calendar. Special tags in event descriptions:
+
+- `#featured` — marks an event as featured on the homepage
+- `#image:<url>` — adds an image to the event (supports Google Drive share links)
