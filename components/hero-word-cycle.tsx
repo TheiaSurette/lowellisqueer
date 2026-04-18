@@ -46,7 +46,7 @@ const RAINBOW_BG = generateBackground(RAINBOW);
 export function HeroWordCycle() {
   const [displayText, setDisplayText] = useState('Queer');
   const [background, setBackground] = useState(RAINBOW_BG);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   useEffect(() => {
     const shuffled = shuffleArray(WORD_POOL);
