@@ -22,8 +22,19 @@ export type SocialLink = {
 export type Meetup = {
   name: string;
   description: string;
+  details: string;
   location: string;
   frequency: string;
   image: string;
   section: string;
+};
+
+export type Resource = {
+  name: string;
+  description: string;
+  location: string;
+  phone: string;
+  email: string;
+  schedule: string;
+  url: string;
 };

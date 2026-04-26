@@ -1,1 +1,56 @@
-[]
+[
+  {
+    "name": "Make Queer Friends (Warp & Weft)",
+    "description": "Make Queer friends!",
+    "details": "Join us at Warp & Weft for a casual, no-pressure hangout where LGBTQIA+ folks from the Greater Lowell area come together to meet new people, catch up with familiar faces, and build community. Whether you're new to the area or just looking to expand your circle, everyone is welcome. Grab a drink, settle in, and let's get to know each other.",
+    "location": "Warp & Weft, 197 Market St, Lowell, MA 01852",
+    "frequency": "2nd Tuesday @ 6 p.m.",
+    "image": "/lowell-logo.png",
+    "section": "Pride & Joy: Greater Lowell Meetups"
+  },
+  {
+    "name": "High Key Queer Tea",
+    "description": "Come and shamelessly self-promote!",
+    "details": "High Key Queer Tea is your chance to show off what you've been working on. Whether you're an artist, small business owner, musician, organizer, or just have something cool to share, this is a supportive, hype-filled space where self-promotion is not only welcome but encouraged. Bring your business cards, your art, your flyers, your latest project. We want to hear about it.",
+    "location": "Cafe Eclipse, 12 Cardinal Oconnell Pkwy, Lowell, MA",
+    "frequency": "2nd Sunday @ 2 p.m.",
+    "image": "/lowell-logo.png",
+    "section": "Pride & Joy: Greater Lowell Meetups"
+  },
+  {
+    "name": "Daytime Queer Cafe Meetup",
+    "description": "55+ & Daytime-Friendly vibes",
+    "details": "Not everyone can make evening events, and that's exactly why this meetup exists. Designed with 55+ and daytime-friendly folks in mind, this is a relaxed cafe hangout for LGBTQIA+ people who prefer a morning gathering. Come for the coffee, stay for the company. All ages are welcome, but the vibe is intentionally mellow and accessible.",
+    "location": "Cafe Eclipse, 12 Cardinal Oconnell Pkwy, Lowell, MA",
+    "frequency": "2nd & 4th Thursday @ 10 a.m.",
+    "image": "/lowell-logo.png",
+    "section": "Pride & Joy: Greater Lowell Meetups"
+  },
+  {
+    "name": "Make Queer Friends (Mandarin)",
+    "description": "Make Queer friends!",
+    "details": "Close out your weekend with good food and great company at Mandarin Asian Bistro. This monthly dinner meetup is all about building friendships in a relaxed, social setting. Whether you come solo or bring a friend, you'll find a welcoming table of LGBTQIA+ folks ready to chat, laugh, and share a meal together.",
+    "location": "Mandarin Asian Bistro, 24 Market St, Lowell, MA 01852",
+    "frequency": "4th Sunday @ 5:30 p.m.",
+    "image": "/lowell-logo.png",
+    "section": "Pride & Joy: Greater Lowell Meetups"
+  },
+  {
+    "name": "Queer Women's Meetup",
+    "description": "All Ages, ABCD (anyone but cis-dudes)",
+    "details": "A welcoming space for queer women and ABCD (anyone but cis-dudes) of all ages to connect, socialize, and build community. Hosted at the Chelmsford Council on Aging, this meetup alternates between casual hangouts and game nights. No matter how you identify within the ABCD umbrella, you belong here.",
+    "location": "Chelmsford Council On Aging, 75 Groton Rd, North Chelmsford, MA",
+    "frequency": "1st & 3rd Tuesday @ 6 p.m.",
+    "image": "/lowell-logo.png",
+    "section": "Other Meetups"
+  },
+  {
+    "name": "Queer Archery Night",
+    "description": "Queer archery night!",
+    "details": "Grab a bow and let it fly! Queer Archery Night is a monthly meetup at Kestrel Archery where LGBTQIA+ folks of all skill levels can try their hand at archery in a fun, supportive environment. Whether you're a seasoned archer or have never touched a bow, the staff at Kestrel will get you set up. It's active, it's social, and it's a blast.",
+    "location": "Kestrel Archery, 80 Pleasant St, 2nd Floor, Dracut, MA",
+    "frequency": "3rd Monday @ 6 p.m.",
+    "image": "/lowell-logo.png",
+    "section": "Other Meetups"
+  }
+]

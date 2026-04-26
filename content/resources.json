@@ -1,0 +1,56 @@
+[
+  {
+    "name": "Center For Hope & Healing",
+    "description": "Offers free and confidential support to survivors of sexual violence and their loved ones, including individual counseling, medical, and legal advocacy.",
+    "location": "15 Hurd St, Lowell, MA 01852",
+    "phone": "(978) 452-7721",
+    "email": "",
+    "schedule": "",
+    "url": "https://chhinc.org/"
+  },
+  {
+    "name": "Greater Lowell Pride",
+    "description": "Greater Lowell is home to a diverse, resilient, and vibrant LGBTQIA+ community, and PRIDE is an opportunity for our community to come together in celebration, visibility, and solidarity.",
+    "location": "DCR Lowell Heritage State Park",
+    "phone": "",
+    "email": "",
+    "schedule": "",
+    "url": "https://www.prideingreaterlowell.org/"
+  },
+  {
+    "name": "LGBTQ+ Recovery Empowerment Group @ Riverbend",
+    "description": "The goal of the LGBTQ+ Recovery Empowerment Group is to provide a confidential, supportive community to foster participants' well-being in recovery.",
+    "location": "101 Jackson Street, 4th Floor, Lowell, MA 01852",
+    "phone": "",
+    "email": "",
+    "schedule": "Wednesday: 6:00 pm to 7:00 pm",
+    "url": "https://riverbendmv.org/community-based/clinical-support-groups/"
+  },
+  {
+    "name": "LGBTQ2S+ Death Cafe (Online)",
+    "description": "A Death Cafe is a group-led discussion about death. The goal of these spaces is to encourage and normalize conversations about death. Feelings about death are as diverse as people are.",
+    "location": "",
+    "phone": "",
+    "email": "",
+    "schedule": "Most Death Cafes are held from 7:00-8:30 p.m. (EST)",
+    "url": "https://www.homehospiceassociation.com/deathcafes"
+  },
+  {
+    "name": "OUTstandingLIFE",
+    "description": "A safe, diverse, nurturing online community of LGBTQ+ older adults. Similar to a virtual senior center, our social network is a welcoming place that fosters connectedness through free online programming.",
+    "location": "",
+    "phone": "",
+    "email": "info@outstandinglife.org",
+    "schedule": "",
+    "url": "https://outstandinglife.org/"
+  },
+  {
+    "name": "Pathway to Better Health",
+    "description": "Offers patient-centered, compassionate care, specializing in gender-affirming hormone therapy, HIV/STI care, and addiction treatment.",
+    "location": "97 Central Street, Suite 303, Lowell, MA 01852",
+    "phone": "(978) 487-6783",
+    "email": "",
+    "schedule": "",
+    "url": "https://ptbhealth.org/"
+  }
+]

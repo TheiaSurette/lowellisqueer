@@ -1,6 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
-import type { Meetup, SocialLink } from './types';
+import type { Meetup, Resource, SocialLink } from './types';
 
 const contentDir = path.join(process.cwd(), 'content');
 
@@ -29,4 +29,9 @@ export async function getMeetupsContent(): Promise<string> {
 export async function getMeetups(): Promise<Meetup[]> {
   const raw = await fs.readFile(path.join(contentDir, 'meetups.json'), 'utf-8');
   return JSON.parse(raw) as Meetup[];
+}
+
+export async function getResources(): Promise<Resource[]> {
+  const raw = await fs.readFile(path.join(contentDir, 'resources.json'), 'utf-8');
+  return JSON.parse(raw) as Resource[];
 }

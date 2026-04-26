@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { cacheLife } from 'next/cache';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { getMeetupsContent, getMeetups } from '@/lib/content';
-import { MeetupCard } from '@/components/meetup-card';
+import { MeetupWithDialog } from '@/components/meetup-dialog';
 import type { Meetup } from '@/lib/types';
 
 export const metadata: Metadata = {
@@ -46,7 +46,7 @@ export default async function MeetupsPage() {
           <h2 className="mb-6 font-heading text-2xl font-bold">{section}</h2>
           <div className="grid gap-6 sm:grid-cols-2">
             {sectionMeetups.map((meetup, i) => (
-              <MeetupCard
+              <MeetupWithDialog
                 key={meetup.name}
                 meetup={meetup}
                 index={sectionIndex * 2 + i}

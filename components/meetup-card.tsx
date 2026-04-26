@@ -7,7 +7,7 @@ export function MeetupCard({ meetup, index }: { meetup: Meetup; index: number })
   const accent = spectrumColor(index);
 
   return (
-    <div className="group overflow-hidden border-2 border-border transition-colors hover:border-primary">
+    <div className="overflow-hidden border-2 border-border transition-colors hover:border-primary">
       <div className="relative aspect-[16/9] bg-accent/20">
         <Image
           src={meetup.image}
