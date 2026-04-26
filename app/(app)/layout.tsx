@@ -6,7 +6,7 @@ import { SpectrumDots } from '@/components/spectrum-dots';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { SPECTRUM } from '@/lib/spectrum';
 
-const NAV_SEPS = [SPECTRUM[0], SPECTRUM[1], SPECTRUM[2]];
+const NAV_SEPS = [SPECTRUM[0], SPECTRUM[1], SPECTRUM[2], SPECTRUM[3], SPECTRUM[4]];
 
 async function Footer() {
   'use cache';
@@ -71,6 +71,16 @@ export default function AppLayout({
           </Link>
           <nav className="flex items-center max-sm:pl-0.5">
             <Link
+              href="/about"
+              className="px-3.5 text-xs font-light uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-primary"
+            >
+              About
+            </Link>
+            <span
+              className="size-[5px] shrink-0 rounded-full"
+              style={{ background: NAV_SEPS[0] }}
+            />
+            <Link
               href="/calendar"
               className="px-3.5 text-xs font-light uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-primary"
             >
@@ -78,19 +88,29 @@ export default function AppLayout({
             </Link>
             <span
               className="size-[5px] shrink-0 rounded-full"
-              style={{ background: NAV_SEPS[0] }}
+              style={{ background: NAV_SEPS[1] }}
             />
             <Link
-              href="/about"
+              href="/resources"
               className="px-3.5 text-xs font-light uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-primary"
             >
-              About
+              Resources
+            </Link>
+            <span
+              className="size-[5px] shrink-0 rounded-full"
+              style={{ background: NAV_SEPS[2] }}
+            />
+            <Link
+              href="/meetups"
+              className="px-3.5 text-xs font-light uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-primary"
+            >
+              Meetups
             </Link>
             {formUrl && (
               <>
                 <span
                   className="size-[5px] shrink-0 rounded-full"
-                  style={{ background: NAV_SEPS[1] }}
+                  style={{ background: NAV_SEPS[3] }}
                 />
                 <a
                   href={formUrl}

@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import { cacheLife, cacheTag } from 'next/cache';
-import { CalendarPlusIcon, PlusCircleIcon } from 'lucide-react';
+import { PlusCircleIcon } from 'lucide-react';
+import { GoogleCalendarIcon } from '@/components/icons/google-calendar';
 import { fetchEvents, getAddToCalendarUrl, getEmbedUrl } from '@/lib/google-calendar';
 import { CalendarViewToggle } from '@/components/calendar-view-toggle';
+import { NewsletterSignup } from '@/components/newsletter-signup';
 import { ScheduleList } from '@/components/schedule-list';
 import { ScheduleSkeleton } from '@/components/events-skeleton';
 
@@ -30,6 +32,7 @@ async function ScheduleView() {
     start: e.start.toISOString(),
     end: e.end.toISOString(),
     isAllDay: e.isAllDay,
+    tags: e.tags,
   }));
 
   return <ScheduleList events={serialized} />;
@@ -49,10 +52,10 @@ export default function CalendarPage() {
             href={addToCalendarUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 border-2 border-primary bg-primary px-4 py-2 text-xs font-medium uppercase tracking-wider text-primary-foreground transition-colors hover:bg-primary/90"
+            className="inline-flex items-center gap-2 border-2 border-border px-4 py-2 text-xs font-medium uppercase tracking-wider text-muted-foreground transition-colors hover:border-primary hover:text-primary"
           >
-            <CalendarPlusIcon className="size-3.5" />
-            Add to Calendar
+            <GoogleCalendarIcon className="size-4.5" />
+            Add Google Calendar
           </a>
           {formUrl && (
             <a
@@ -76,6 +79,8 @@ export default function CalendarPage() {
         }
         embedUrl={embedUrl}
       />
+
+      <NewsletterSignup />
     </div>
   );
 }

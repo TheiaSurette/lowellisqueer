@@ -36,3 +36,13 @@ pnpm-debug.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+.vercel
+
+# tooling artifacts
+.playwright-mcp/
+.claude/
+
+# scratch files
+agenda-snapshot.md
+agenda-view.png
+calendar-cleanup-plan.md

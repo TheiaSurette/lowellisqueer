@@ -8,6 +8,7 @@ import {
   ClockIcon,
   MapPinIcon,
   ExternalLinkIcon,
+  TagIcon,
 } from 'lucide-react';
 import { fetchEventById } from '@/lib/google-calendar';
 import { stripHtml } from '@/lib/format';
@@ -125,6 +126,22 @@ function EventDetailView({ event }: { event: CalendarEvent }) {
               {event.location}
             </span>
           </a>
+        )}
+
+        {event.tags.length > 0 && (
+          <div className="flex items-center gap-3 text-muted-foreground">
+            <TagIcon className="size-4 shrink-0 text-spectrum-purple" />
+            <div className="flex flex-wrap gap-2">
+              {event.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="border-2 border-border px-2.5 py-0.5 text-xs font-medium uppercase tracking-wider"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
         )}
       </div>
 

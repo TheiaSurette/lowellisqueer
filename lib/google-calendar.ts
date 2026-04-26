@@ -38,10 +38,17 @@ function extractImageUrl(description: string): string | null {
   return url;
 }
 
+function extractTags(description: string): string[] {
+  const match = description.match(/#tags:\s*"([^"]*)"/i);
+  if (!match) return [];
+  return match[1].split(',').map((t) => t.trim()).filter(Boolean);
+}
+
 function stripTags(description: string): string {
   return description
     .replace(/#featured\s*/gi, '')
     .replace(/#image:\s*(?:<a[^>]*>)?https?:\/\/[^\s<]+(?:<\/a>)?\s*/gi, '')
+    .replace(/#tags:\s*"[^"]*"\s*/gi, '')
     .trim();
 }
 
@@ -60,6 +67,7 @@ function normalizeEvent(event: GoogleCalendarEvent): CalendarEvent {
     colorId: event.colorId ?? null,
     imageUrl: extractImageUrl(rawDescription),
     featured: rawDescription.includes('#featured'),
+    tags: extractTags(rawDescription),
     htmlLink: event.htmlLink,
   };
 }

@@ -9,6 +9,7 @@ export type CalendarEvent = {
   colorId: string | null;
   imageUrl: string | null;
   featured: boolean;
+  tags: string[];
   htmlLink: string;
 };
 
@@ -16,4 +17,13 @@ export type SocialLink = {
   platform: string;
   url: string;
   icon?: string;
+};
+
+export type Meetup = {
+  name: string;
+  description: string;
+  location: string;
+  frequency: string;
+  image: string;
+  section: string;
 };

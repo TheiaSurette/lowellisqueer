@@ -130,7 +130,17 @@
 }
 
 @utility prose-content {
-  @apply prose prose-neutral max-w-none font-sans font-light leading-relaxed dark:prose-invert prose-headings:font-heading prose-headings:font-bold prose-a:text-primary;
+  @apply prose max-w-none font-sans font-light leading-relaxed prose-headings:font-heading prose-headings:font-bold prose-a:text-primary;
+  --tw-prose-body: var(--foreground);
+  --tw-prose-headings: var(--foreground);
+  --tw-prose-bold: var(--foreground);
+  --tw-prose-links: var(--primary);
+  --tw-prose-counters: var(--muted-foreground);
+  --tw-prose-bullets: var(--muted-foreground);
+  --tw-prose-quotes: var(--foreground);
+  --tw-prose-quote-borders: var(--border);
+  --tw-prose-hr: var(--border);
+  --tw-prose-code: var(--foreground);
 }
 
 

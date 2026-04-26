@@ -15,6 +15,7 @@ import {
   UpcomingRowsSkeleton,
 } from "@/components/events-skeleton"
 import { HeroWordCycle } from "@/components/hero-word-cycle"
+import { NewsletterSignup } from "@/components/newsletter-signup"
 import type { CalendarEvent } from "@/lib/types"
 
 function FeaturedCard({
@@ -206,6 +207,8 @@ export default function HomePage() {
       <Suspense fallback={<EventsSkeleton count={3} />}>
         <FeaturedEvents />
       </Suspense>
+
+      <NewsletterSignup />
 
       <Suspense fallback={<UpcomingRowsSkeleton count={6} />}>
         <UpcomingEvents />
