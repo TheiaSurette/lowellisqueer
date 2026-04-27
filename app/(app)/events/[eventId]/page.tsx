@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: PageProps) {
     title: `${event.title} | Lowell Is Queer`,
     description: event.description
       ? stripHtml(event.description).slice(0, 160)
-      : `${event.title} — ${event.start.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}`,
+      : `${event.title} — ${event.start.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', timeZone: 'America/New_York' })}`,
   };
 }
 
@@ -65,6 +65,7 @@ function EventDetailView({ event }: { event: CalendarEvent }) {
     month: 'long',
     day: 'numeric',
     year: 'numeric',
+    timeZone: 'America/New_York',
   });
 
   const startTime = event.isAllDay
@@ -72,6 +73,7 @@ function EventDetailView({ event }: { event: CalendarEvent }) {
     : event.start.toLocaleTimeString('en-US', {
         hour: 'numeric',
         minute: '2-digit',
+        timeZone: 'America/New_York',
       });
 
   const endTime = event.isAllDay
@@ -79,6 +81,7 @@ function EventDetailView({ event }: { event: CalendarEvent }) {
     : event.end.toLocaleTimeString('en-US', {
         hour: 'numeric',
         minute: '2-digit',
+        timeZone: 'America/New_York',
       });
 
   const descriptionHtml = event.description || null;
