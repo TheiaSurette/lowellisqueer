@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 import { Dialog } from '@base-ui/react/dialog';
 import { MenuIcon, XIcon } from 'lucide-react';
 import Link from 'next/link';
@@ -16,11 +15,6 @@ const NAV_LINKS = [
 
 export function MobileNav({ formUrl }: { formUrl?: string }) {
   const [open, setOpen] = useState(false);
-  const pathname = usePathname();
-
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
@@ -41,6 +35,7 @@ export function MobileNav({ formUrl }: { formUrl?: string }) {
               <Link
                 key={link.href}
                 href={link.href}
+                onClick={() => setOpen(false)}
                 className="flex items-center gap-3 py-3 text-sm font-light uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-primary"
               >
                 <span
