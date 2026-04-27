@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { cacheLife } from 'next/cache';
 import { getSocialLinks } from '@/lib/content';
+import { MobileNav } from '@/components/mobile-nav';
 import { SpectrumDots } from '@/components/spectrum-dots';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { SPECTRUM } from '@/lib/spectrum';
@@ -64,12 +65,13 @@ export default function AppLayout({
   return (
     <>
       <header className="mx-auto max-w-[1100px] px-8 pt-8">
-        <div className="flex items-center justify-between border-b-2 border-primary pb-5 max-sm:flex-col max-sm:items-start max-sm:gap-3">
+        <div className="flex items-center justify-between border-b-2 border-primary pb-5">
           <Link href="/" className="flex items-center gap-2.5 font-heading text-lg font-black tracking-wider">
             <Image src="/lowell-logo.png" alt="" width={40} height={40} className="size-10 -translate-y-1" />
             Lowell Is Queer
           </Link>
-          <nav className="flex flex-wrap items-center gap-y-2 max-sm:pl-0.5">
+          <MobileNav formUrl={formUrl} />
+          <nav className="hidden items-center sm:flex">
             <Link
               href="/about"
               className="px-3.5 text-xs font-light uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-primary"
