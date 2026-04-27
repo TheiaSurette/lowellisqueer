@@ -69,7 +69,7 @@ export default function AppLayout({
             <Image src="/lowell-logo.png" alt="" width={40} height={40} className="size-10 -translate-y-1" />
             Lowell Is Queer
           </Link>
-          <nav className="flex items-center max-sm:pl-0.5">
+          <nav className="flex flex-wrap items-center gap-y-2 max-sm:pl-0.5">
             <Link
               href="/about"
               className="px-3.5 text-xs font-light uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-primary"
