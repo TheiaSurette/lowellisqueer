@@ -2,5 +2,11 @@
   "framework": "nextjs",
   "installCommand": "pnpm install",
   "buildCommand": "pnpm build",
-  "regions": ["iad1"]
+  "regions": ["iad1"],
+  "crons": [
+    {
+      "path": "/api/digest",
+      "schedule": "0 15 * * 0"
+    }
+  ]
 }

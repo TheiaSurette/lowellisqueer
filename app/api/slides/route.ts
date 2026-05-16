@@ -12,13 +12,17 @@ const HEIGHT = 1350
 
 function getMonSunBounds(now = new Date()): { start: Date; end: Date } {
   const et = new Date(now.toLocaleString("en-US", { timeZone: TZ }))
+  const offset = now.getTime() - et.getTime()
   const day = et.getDay()
   const monday = new Date(et)
   monday.setDate(et.getDate() - ((day + 6) % 7))
   monday.setHours(0, 0, 0, 0)
   const nextMonday = new Date(monday)
   nextMonday.setDate(monday.getDate() + 7)
-  return { start: monday, end: nextMonday }
+  return {
+    start: new Date(monday.getTime() + offset),
+    end: new Date(nextMonday.getTime() + offset),
+  }
 }
 
 let fontCache: Awaited<ReturnType<typeof loadAllFonts>> | null = null

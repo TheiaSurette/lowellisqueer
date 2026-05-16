@@ -96,14 +96,21 @@ export function groupByDay(
 }
 
 export function getWeekBounds(date?: Date): { start: Date; end: Date } {
-  const start = new Date(date ?? new Date())
-  start.setHours(0, 0, 0, 0)
-  start.setDate(start.getDate() + 1)
+  const now = date ?? new Date()
+  const et = new Date(now.toLocaleString("en-US", { timeZone: TZ }))
+  const offset = now.getTime() - et.getTime()
 
-  const end = new Date(start)
-  end.setDate(end.getDate() + 7)
+  const startET = new Date(et)
+  startET.setHours(0, 0, 0, 0)
+  startET.setDate(startET.getDate() + 1)
 
-  return { start, end }
+  const endET = new Date(startET)
+  endET.setDate(endET.getDate() + 7)
+
+  return {
+    start: new Date(startET.getTime() + offset),
+    end: new Date(endET.getTime() + offset),
+  }
 }
 
 export function stripHtml(html: string): string {

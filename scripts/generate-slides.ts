@@ -87,12 +87,8 @@ async function fetchEvents(
 }
 
 async function main() {
-  const now = new Date()
-  const start = new Date(now)
-  start.setHours(0, 0, 0, 0)
-  start.setDate(start.getDate() + 1)
-  const end = new Date(start)
-  end.setDate(end.getDate() + 7)
+  const { getWeekBounds } = await import("../lib/format")
+  const { start, end } = getWeekBounds()
 
   console.log(
     `Fetching events for ${start.toDateString()} – ${end.toDateString()}...`

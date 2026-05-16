@@ -11,7 +11,12 @@ import {
   MapPinIcon,
   XIcon,
 } from "lucide-react"
-import { formatDate, formatTime, stripHtmlPreserveBreaks } from "@/lib/format"
+import {
+  formatDate,
+  formatTime,
+  TZ,
+  stripHtmlPreserveBreaks,
+} from "@/lib/format"
 import { spectrumColor, SPECTRUM } from "@/lib/spectrum"
 import type { PrideSpotlight, SerializedCalendarEvent } from "@/lib/types"
 import { INTERNAL_TAGS } from "@/lib/tags"
@@ -28,19 +33,20 @@ function categorizeEvents(events: SerializedCalendarEvent[]): EventRowData[] {
   const rows: EventRowData[] = []
 
   const now = new Date()
-  const eastern = new Date(
-    now.toLocaleString("en-US", { timeZone: "America/New_York" })
-  )
+  const eastern = new Date(now.toLocaleString("en-US", { timeZone: TZ }))
+  const offset = now.getTime() - eastern.getTime()
   const dayOfWeek = eastern.getDay()
   const weekStart = new Date(eastern)
   weekStart.setDate(eastern.getDate() - dayOfWeek)
   weekStart.setHours(0, 0, 0, 0)
   const weekEnd = new Date(weekStart)
   weekEnd.setDate(weekStart.getDate() + 7)
+  const weekStartUTC = new Date(weekStart.getTime() + offset)
+  const weekEndUTC = new Date(weekEnd.getTime() + offset)
 
   const thisWeek = events.filter((e) => {
     const start = new Date(e.start)
-    return start >= weekStart && start < weekEnd
+    return start >= weekStartUTC && start < weekEndUTC
   })
   rows.push({ title: "This Week", events: thisWeek, accentColor: SPECTRUM[0] })
 
