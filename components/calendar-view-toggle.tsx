@@ -1,45 +1,42 @@
-'use client';
+"use client"
 
-import { useState, type ReactNode } from 'react';
-import { ListIcon, CalendarIcon } from 'lucide-react';
+import { useState, type ReactNode } from "react"
+import { ListIcon, CalendarIcon } from "lucide-react"
+
+const VIEW_OPTIONS = [
+  { value: "schedule" as const, label: "Schedule", icon: ListIcon },
+  { value: "calendar" as const, label: "Calendar", icon: CalendarIcon },
+]
 
 export function CalendarViewToggle({
   scheduleView,
   embedUrl,
 }: {
-  scheduleView: ReactNode;
-  embedUrl: string;
+  scheduleView: ReactNode
+  embedUrl: string
 }) {
-  const [view, setView] = useState<'schedule' | 'calendar'>('schedule');
+  const [view, setView] = useState<"schedule" | "calendar">("schedule")
 
   return (
     <div>
       <div className="mb-8 flex gap-2">
-        <button
-          onClick={() => setView('schedule')}
-          className={`inline-flex items-center gap-2 px-4 py-2 text-xs font-medium uppercase tracking-wider transition-colors ${
-            view === 'schedule'
-              ? 'border-2 border-primary bg-primary text-primary-foreground'
-              : 'border-2 border-border text-muted-foreground hover:border-primary hover:text-primary'
-          }`}
-        >
-          <ListIcon className="size-3.5" />
-          Schedule
-        </button>
-        <button
-          onClick={() => setView('calendar')}
-          className={`inline-flex items-center gap-2 px-4 py-2 text-xs font-medium uppercase tracking-wider transition-colors ${
-            view === 'calendar'
-              ? 'border-2 border-primary bg-primary text-primary-foreground'
-              : 'border-2 border-border text-muted-foreground hover:border-primary hover:text-primary'
-          }`}
-        >
-          <CalendarIcon className="size-3.5" />
-          Calendar
-        </button>
+        {VIEW_OPTIONS.map(({ value, label, icon: Icon }) => (
+          <button
+            key={value}
+            onClick={() => setView(value)}
+            className={`inline-flex items-center gap-2 px-4 py-2 text-xs font-medium tracking-wider uppercase transition-colors ${
+              view === value
+                ? "border-2 border-primary bg-primary text-primary-foreground"
+                : "border-2 border-border text-muted-foreground hover:border-primary hover:text-primary"
+            }`}
+          >
+            <Icon className="size-3.5" />
+            {label}
+          </button>
+        ))}
       </div>
 
-      {view === 'schedule' ? (
+      {view === "schedule" ? (
         scheduleView
       ) : (
         <div className="overflow-hidden border-2 border-border">
@@ -51,5 +48,5 @@ export function CalendarViewToggle({
         </div>
       )}
     </div>
-  );
+  )
 }

@@ -11,7 +11,10 @@ export function EventsSkeleton({ count = 3 }: { count?: number }) {
         </div>
         <div className="flex flex-col gap-8">
           {Array.from({ length: Math.min(count - 1, 2) }).map((_, i) => (
-            <div key={i} className="animate-pulse border-l-[3px] border-muted p-8">
+            <div
+              key={i}
+              className="animate-pulse border-l-[3px] border-muted p-8"
+            >
               <div className="mb-3 h-6 w-48 rounded bg-muted" />
               <div className="mb-5 h-4 w-full rounded bg-muted" />
               <div className="h-3 w-40 rounded bg-muted" />
@@ -20,7 +23,7 @@ export function EventsSkeleton({ count = 3 }: { count?: number }) {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 export function UpcomingRowsSkeleton({ count = 6 }: { count?: number }) {
@@ -48,7 +51,7 @@ export function UpcomingRowsSkeleton({ count = 6 }: { count?: number }) {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 export function ScheduleSkeleton({ count = 6 }: { count?: number }) {
@@ -62,5 +65,5 @@ export function ScheduleSkeleton({ count = 6 }: { count?: number }) {
         </div>
       ))}
     </div>
-  );
+  )
 }

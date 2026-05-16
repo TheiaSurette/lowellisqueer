@@ -1,39 +1,41 @@
-import type { Metadata } from 'next';
-import { cacheLife } from 'next/cache';
-import { MDXRemote } from 'next-mdx-remote/rsc';
-import { getMeetupsContent, getMeetups } from '@/lib/content';
-import { MeetupWithDialog } from '@/components/meetup-dialog';
-import type { Meetup } from '@/lib/types';
+import type { Metadata } from "next"
+import { cacheLife } from "next/cache"
+import { MDXRemote } from "next-mdx-remote/rsc"
+import { getMeetupsContent, getMeetups } from "@/lib/content"
+import { MeetupWithDialog } from "@/components/meetup-dialog"
+import type { Meetup } from "@/lib/types"
 
 export const metadata: Metadata = {
-  title: 'Meetups | Lowell Is Queer',
-  description: 'Local LGBTQIA+ meetup groups in and around Lowell, MA',
-};
+  title: "Meetups | Lowell Is Queer",
+  description: "Local LGBTQIA+ meetup groups in and around Lowell, MA",
+}
 
 function groupBySection(meetups: Meetup[]): [string, Meetup[]][] {
-  const groups = new Map<string, Meetup[]>();
+  const groups = new Map<string, Meetup[]>()
   for (const meetup of meetups) {
-    const group = groups.get(meetup.section);
-    if (group) group.push(meetup);
-    else groups.set(meetup.section, [meetup]);
+    const group = groups.get(meetup.section)
+    if (group) group.push(meetup)
+    else groups.set(meetup.section, [meetup])
   }
-  return Array.from(groups.entries());
+  return Array.from(groups.entries())
 }
 
 export default async function MeetupsPage() {
-  'use cache';
-  cacheLife('max');
+  "use cache"
+  cacheLife("max")
 
   const [meetupsSource, meetups] = await Promise.all([
     getMeetupsContent(),
     getMeetups(),
-  ]);
+  ])
 
-  const sections = groupBySection(meetups);
+  const sections = groupBySection(meetups)
 
   return (
     <div className="mx-auto max-w-[800px] px-8 py-16">
-      <h1 className="mb-10 font-heading text-3xl font-black tracking-tight">Meetups</h1>
+      <h1 className="mb-10 font-heading text-3xl font-black tracking-tight">
+        Meetups
+      </h1>
 
       <section className="mb-14">
         <div className="prose-content prose-a:no-underline hover:prose-a:underline">
@@ -56,5 +58,5 @@ export default async function MeetupsPage() {
         </section>
       ))}
     </div>
-  );
+  )
 }

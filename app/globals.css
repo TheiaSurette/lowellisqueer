@@ -150,6 +150,24 @@
   }
 }
 
+@keyframes pride-shimmer {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+@utility pride-shimmer {
+  animation: pride-shimmer 3s linear infinite;
+  background-size: 200% 100%;
+}
+
+@utility scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

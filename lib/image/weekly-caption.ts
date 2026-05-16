@@ -1,42 +1,10 @@
 import type { CalendarEvent } from "@/lib/types"
+import { formatTime, formatWeekdayLong, formatWeekRange } from "@/lib/format"
 
-function formatDay(date: Date): string {
-  return date.toLocaleDateString("en-US", {
-    weekday: "long",
-    timeZone: "America/New_York",
-  })
-}
-
-function formatTime(date: Date): string {
-  return date.toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "2-digit",
-    timeZone: "America/New_York",
-  })
-}
-
-function formatWeekRange(weekStart: Date): string {
-  const end = new Date(weekStart)
-  end.setDate(end.getDate() + 6)
-  const startStr = weekStart.toLocaleDateString("en-US", {
-    month: "long",
-    day: "numeric",
-    timeZone: "America/New_York",
-  })
-  const endStr = end.toLocaleDateString("en-US", {
-    month: "long",
-    day: "numeric",
-    timeZone: "America/New_York",
-  })
-  return `${startStr} – ${endStr}`
-}
-
-type GroupedEvents = [string, CalendarEvent[]][]
-
-function groupByDay(events: CalendarEvent[]): GroupedEvents {
+function groupByWeekday(events: CalendarEvent[]): [string, CalendarEvent[]][] {
   const groups = new Map<string, CalendarEvent[]>()
   for (const event of events) {
-    const key = formatDay(event.start)
+    const key = formatWeekdayLong(event.start)
     const group = groups.get(key)
     if (group) group.push(event)
     else groups.set(key, [event])
@@ -49,7 +17,7 @@ export function generateWeeklyCaption(
   weekStart: Date
 ): string {
   const weekRange = formatWeekRange(weekStart)
-  const grouped = groupByDay(events)
+  const grouped = groupByWeekday(events)
 
   const lines: string[] = [`🏳️‍🌈 This Week in Queer Lowell`, `${weekRange}`, ""]
 

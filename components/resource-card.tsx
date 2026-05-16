@@ -1,5 +1,5 @@
-import { ClockIcon, MailIcon, MapPinIcon, PhoneIcon } from 'lucide-react';
-import type { Resource } from '@/lib/types';
+import { ClockIcon, MailIcon, MapPinIcon, PhoneIcon } from "lucide-react"
+import type { Resource } from "@/lib/types"
 
 export function ResourceCard({ resource }: { resource: Resource }) {
   return (
@@ -10,7 +10,7 @@ export function ResourceCard({ resource }: { resource: Resource }) {
       className="-mx-4 block border-b border-border px-4 py-8 transition-colors hover:bg-accent/50"
     >
       <h3 className="font-heading text-lg font-bold">{resource.name}</h3>
-      <p className="mt-2 text-sm font-light leading-relaxed text-muted-foreground">
+      <p className="mt-2 text-sm leading-relaxed font-light text-muted-foreground">
         {resource.description}
       </p>
       <div className="mt-3 space-y-1">
@@ -40,5 +40,5 @@ export function ResourceCard({ resource }: { resource: Resource }) {
         )}
       </div>
     </a>
-  );
+  )
 }

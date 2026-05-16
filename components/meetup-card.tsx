@@ -1,10 +1,16 @@
-import Image from 'next/image';
-import { CalendarClockIcon, MapPinIcon } from 'lucide-react';
-import type { Meetup } from '@/lib/types';
-import { spectrumColor } from '@/lib/spectrum';
+import Image from "next/image"
+import { CalendarClockIcon, MapPinIcon } from "lucide-react"
+import type { Meetup } from "@/lib/types"
+import { spectrumColor } from "@/lib/spectrum"
 
-export function MeetupCard({ meetup, index }: { meetup: Meetup; index: number }) {
-  const accent = spectrumColor(index);
+export function MeetupCard({
+  meetup,
+  index,
+}: {
+  meetup: Meetup
+  index: number
+}) {
+  const accent = spectrumColor(index)
 
   return (
     <div className="overflow-hidden border-2 border-border transition-colors hover:border-primary">
@@ -23,7 +29,7 @@ export function MeetupCard({ meetup, index }: { meetup: Meetup; index: number })
       </div>
       <div className="p-5">
         <h3 className="font-heading text-lg font-bold">{meetup.name}</h3>
-        <p className="mt-2 text-sm font-light leading-relaxed text-muted-foreground">
+        <p className="mt-2 text-sm leading-relaxed font-light text-muted-foreground">
           {meetup.description}
         </p>
         <div className="mt-4 space-y-1.5">
@@ -38,5 +44,5 @@ export function MeetupCard({ meetup, index }: { meetup: Meetup; index: number })
         </div>
       </div>
     </div>
-  );
+  )
 }

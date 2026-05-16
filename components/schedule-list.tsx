@@ -1,108 +1,112 @@
-'use client';
+"use client"
 
-import { useMemo, useState } from 'react';
-import fuzzysort from 'fuzzysort';
-import { MapPinIcon, SearchIcon, TagIcon, XIcon } from 'lucide-react';
-import { formatDay, formatWeekday, formatTime, formatMonthYear } from '@/lib/format';
-import { spectrumTextColor } from '@/lib/spectrum';
+import { useMemo, useState } from "react"
+import fuzzysort from "fuzzysort"
+import { MapPinIcon, SearchIcon, TagIcon, XIcon } from "lucide-react"
+import {
+  formatDay,
+  formatWeekday,
+  formatTime,
+  formatMonthYear,
+} from "@/lib/format"
+import { spectrumTextColor } from "@/lib/spectrum"
+import { INTERNAL_TAGS } from "@/lib/tags"
+import type { SerializedCalendarEvent } from "@/lib/types"
 
-type SerializedEvent = {
-  id: string;
-  title: string;
-  location: string;
-  start: string;
-  end: string;
-  isAllDay: boolean;
-  tags: string[];
-};
+const PAGE_SIZE = 10
 
-const PAGE_SIZE = 10;
-
-function groupByMonth(events: SerializedEvent[]): [string, SerializedEvent[]][] {
-  const groups = new Map<string, SerializedEvent[]>();
+function groupByMonth(
+  events: SerializedCalendarEvent[]
+): [string, SerializedCalendarEvent[]][] {
+  const groups = new Map<string, SerializedCalendarEvent[]>()
   for (const event of events) {
-    const key = formatMonthYear(new Date(event.start));
-    const group = groups.get(key);
-    if (group) group.push(event);
-    else groups.set(key, [event]);
+    const key = formatMonthYear(new Date(event.start))
+    const group = groups.get(key)
+    if (group) group.push(event)
+    else groups.set(key, [event])
   }
-  return Array.from(groups.entries());
+  return Array.from(groups.entries())
 }
 
-function collectTags(events: SerializedEvent[]): string[] {
-  const set = new Set<string>();
+function collectTags(events: SerializedCalendarEvent[]): string[] {
+  const set = new Set<string>()
   for (const e of events) {
-    for (const t of e.tags) set.add(t);
+    for (const t of e.tags) {
+      if (!INTERNAL_TAGS.has(t)) set.add(t)
+    }
   }
-  return Array.from(set).sort((a, b) => a.localeCompare(b));
+  return Array.from(set).sort((a, b) => a.localeCompare(b))
 }
 
-export function ScheduleList({ events }: { events: SerializedEvent[] }) {
-  const [query, setQuery] = useState('');
-  const [page, setPage] = useState(1);
-  const [selectedTags, setSelectedTags] = useState<Set<string>>(new Set());
+export function ScheduleList({
+  events,
+}: {
+  events: SerializedCalendarEvent[]
+}) {
+  const [query, setQuery] = useState("")
+  const [page, setPage] = useState(1)
+  const [selectedTags, setSelectedTags] = useState<Set<string>>(new Set())
 
-  const allTags = useMemo(() => collectTags(events), [events]);
+  const allTags = useMemo(() => collectTags(events), [events])
 
   function toggleTag(tag: string) {
     setSelectedTags((prev) => {
-      const next = new Set(prev);
-      if (next.has(tag)) next.delete(tag);
-      else next.add(tag);
-      return next;
-    });
-    setPage(1);
+      const next = new Set(prev)
+      if (next.has(tag)) next.delete(tag)
+      else next.add(tag)
+      return next
+    })
+    setPage(1)
   }
 
   function clearTags() {
-    setSelectedTags(new Set());
-    setPage(1);
+    setSelectedTags(new Set())
+    setPage(1)
   }
 
   const filtered = useMemo(() => {
-    let result = events;
+    let result = events
 
     if (selectedTags.size > 0) {
-      result = result.filter((e) =>
-        e.tags.some((t) => selectedTags.has(t)),
-      );
+      result = result.filter((e) => e.tags.some((t) => selectedTags.has(t)))
     }
 
-    if (!query) return result;
+    if (!query) return result
     return fuzzysort
-      .go(query, result, { keys: ['title', 'location'], threshold: 0.3 })
-      .map((r) => r.obj);
-  }, [query, events, selectedTags]);
+      .go(query, result, { keys: ["title", "location"], threshold: 0.3 })
+      .map((r) => r.obj)
+  }, [query, events, selectedTags])
 
-  const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
-  const safePage = Math.min(page, totalPages || 1);
-  const paged = filtered.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
-  const grouped = groupByMonth(paged);
+  const totalPages = Math.ceil(filtered.length / PAGE_SIZE)
+  const safePage = Math.min(page, totalPages || 1)
+  const paged = filtered.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE)
+  const grouped = groupByMonth(paged)
 
-  let eventIndex = (safePage - 1) * PAGE_SIZE;
+  let eventIndex = (safePage - 1) * PAGE_SIZE
 
   return (
     <div>
       <div className="relative mb-6">
-        <SearchIcon className="absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
+        <SearchIcon className="absolute top-1/2 left-3 size-3.5 -translate-y-1/2 text-muted-foreground" />
         <input
           type="text"
           value={query}
           onChange={(e) => {
-            setQuery(e.target.value);
-            setPage(1);
+            setQuery(e.target.value)
+            setPage(1)
           }}
           placeholder="Search events..."
-          className="w-full border-2 border-border bg-transparent py-2 pl-9 pr-9 text-sm font-light tracking-wide text-foreground placeholder:text-muted-foreground/60 focus:border-primary focus:outline-none"
+          className="w-full border-2 border-border bg-transparent py-2 pr-9 pl-9 text-sm font-light tracking-wide text-foreground placeholder:text-muted-foreground/60 focus:border-primary focus:outline-none"
         />
         {query && (
           <button
             type="button"
+            aria-label="Clear search"
             onClick={() => {
-              setQuery('');
-              setPage(1);
+              setQuery("")
+              setPage(1)
             }}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-primary"
+            className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground hover:text-primary"
           >
             <XIcon className="size-3.5" />
           </button>
@@ -113,27 +117,27 @@ export function ScheduleList({ events }: { events: SerializedEvent[] }) {
         <div className="mb-6 flex flex-wrap items-center gap-2">
           <TagIcon className="size-3.5 text-muted-foreground" />
           {allTags.map((tag) => {
-            const active = selectedTags.has(tag);
+            const active = selectedTags.has(tag)
             return (
               <button
                 key={tag}
                 type="button"
                 onClick={() => toggleTag(tag)}
-                className={`border-2 px-3 py-1 text-xs font-medium uppercase tracking-wider transition-colors ${
+                className={`border-2 px-3 py-1 text-xs font-medium tracking-wider uppercase transition-colors ${
                   active
-                    ? 'border-primary bg-primary text-primary-foreground'
-                    : 'border-border text-muted-foreground hover:border-primary hover:text-primary'
+                    ? "border-primary bg-primary text-primary-foreground"
+                    : "border-border text-muted-foreground hover:border-primary hover:text-primary"
                 }`}
               >
                 {tag}
               </button>
-            );
+            )
           })}
           {selectedTags.size > 0 && (
             <button
               type="button"
               onClick={clearTags}
-              className="ml-1 text-xs font-medium uppercase tracking-wider text-muted-foreground transition-colors hover:text-primary"
+              className="ml-1 text-xs font-medium tracking-wider text-muted-foreground uppercase transition-colors hover:text-primary"
             >
               <XIcon className="size-3.5" />
             </button>
@@ -142,9 +146,7 @@ export function ScheduleList({ events }: { events: SerializedEvent[] }) {
       )}
 
       {filtered.length === 0 && (query || selectedTags.size > 0) ? (
-        <p className="text-muted-foreground">
-          No events matching your filters
-        </p>
+        <p className="text-muted-foreground">No events matching your filters</p>
       ) : (
         <div className="space-y-10">
           {grouped.map(([month, monthEvents]) => (
@@ -154,9 +156,9 @@ export function ScheduleList({ events }: { events: SerializedEvent[] }) {
               </h3>
               <div className="space-y-0">
                 {monthEvents.map((event) => {
-                  const i = eventIndex++;
-                  const textColor = spectrumTextColor(i);
-                  const start = new Date(event.start);
+                  const i = eventIndex++
+                  const textColor = spectrumTextColor(i)
+                  const start = new Date(event.start)
 
                   return (
                     <a
@@ -166,13 +168,13 @@ export function ScheduleList({ events }: { events: SerializedEvent[] }) {
                     >
                       <div className="flex-shrink-0 text-center">
                         <div
-                          className="text-2xl font-bold font-heading"
+                          className="font-heading text-2xl font-bold"
                           style={{ color: textColor }}
                         >
                           {formatDay(start)}
                         </div>
                         <div
-                          className="text-[0.65rem] font-medium uppercase tracking-wider"
+                          className="text-[0.65rem] font-medium tracking-wider uppercase"
                           style={{ color: textColor }}
                         >
                           {formatWeekday(start)}
@@ -183,29 +185,36 @@ export function ScheduleList({ events }: { events: SerializedEvent[] }) {
                           {event.title}
                         </h4>
                         <p className="text-sm font-light text-muted-foreground">
-                          {event.isAllDay ? 'All day' : formatTime(start)}
+                          {event.isAllDay ? "All day" : formatTime(start)}
                         </p>
                         {event.location && (
-                          <div className="mt-1 flex items-center gap-1.5 text-sm font-light italic text-muted-foreground">
+                          <div className="mt-1 flex items-center gap-1.5 text-sm font-light text-muted-foreground italic">
                             <MapPinIcon className="size-3 shrink-0" />
                             <span className="truncate">{event.location}</span>
                           </div>
                         )}
-                        {event.tags.length > 0 && (
-                          <div className="mt-1.5 flex flex-wrap gap-1.5">
-                            {event.tags.map((tag) => (
-                              <span
-                                key={tag}
-                                className="border border-border px-2 py-0.5 text-[0.6rem] font-medium uppercase tracking-wider text-muted-foreground"
-                              >
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                        )}
+                        {(() => {
+                          const visibleTags = event.tags.filter(
+                            (t) => !INTERNAL_TAGS.has(t)
+                          )
+                          return (
+                            visibleTags.length > 0 && (
+                              <div className="mt-1.5 flex flex-wrap gap-1.5">
+                                {visibleTags.map((tag) => (
+                                  <span
+                                    key={tag}
+                                    className="border border-border px-2 py-0.5 text-[0.6rem] font-medium tracking-wider text-muted-foreground uppercase"
+                                  >
+                                    {tag}
+                                  </span>
+                                ))}
+                              </div>
+                            )
+                          )
+                        })()}
                       </div>
                     </a>
-                  );
+                  )
                 })}
               </div>
             </div>
@@ -217,7 +226,7 @@ export function ScheduleList({ events }: { events: SerializedEvent[] }) {
                 <button
                   type="button"
                   onClick={() => setPage(safePage - 1)}
-                  className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-primary"
+                  className="text-xs font-medium tracking-[0.18em] text-muted-foreground uppercase transition-colors hover:text-primary"
                 >
                   &larr; Previous
                 </button>
@@ -231,7 +240,7 @@ export function ScheduleList({ events }: { events: SerializedEvent[] }) {
                 <button
                   type="button"
                   onClick={() => setPage(safePage + 1)}
-                  className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-primary"
+                  className="text-xs font-medium tracking-[0.18em] text-muted-foreground uppercase transition-colors hover:text-primary"
                 >
                   Next &rarr;
                 </button>
@@ -243,5 +252,5 @@ export function ScheduleList({ events }: { events: SerializedEvent[] }) {
         </div>
       )}
     </div>
-  );
+  )
 }

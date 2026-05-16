@@ -1,0 +1,13 @@
+[
+  {
+    "name": "Mira Ve - Colombian Street Food",
+    "location": "105 Mammoth Rd, Lowell MA",
+    "description": "Latina owned Colombian street food restaurant serving up the real flavors of Colombia right here in Lowell!"
+  },
+  {
+    "name": "Cafe Eclipse",
+    "location": "12 Cardinal Oconnell Pkwy, Lowell, MA",
+    "description": "Cozy community oriented cafe known for its welcome vibe and quality coffee.",
+    "website": "https://www.cafeeclipse.com"
+  }
+]

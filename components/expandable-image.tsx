@@ -1,32 +1,30 @@
-'use client';
+"use client"
 
-import { useEffect, useState, useCallback } from 'react';
-import { XIcon } from 'lucide-react';
+import { useEffect, useState, useCallback } from "react"
+import { XIcon } from "lucide-react"
 
-export function ExpandableImage({ src }: { src: string }) {
-  const [open, setOpen] = useState(false);
-  const [zoomed, setZoomed] = useState(false);
+export function ExpandableImage({ src, alt }: { src: string; alt?: string }) {
+  const [open, setOpen] = useState(false)
 
   const close = useCallback(() => {
-    setOpen(false);
-    setZoomed(false);
-  }, []);
+    setOpen(false)
+  }, [])
 
   useEffect(() => {
-    if (!open) return;
+    if (!open) return
 
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') close();
-    };
+      if (e.key === "Escape") close()
+    }
 
-    document.addEventListener('keydown', onKeyDown);
-    document.body.style.overflow = 'hidden';
+    document.addEventListener("keydown", onKeyDown)
+    document.body.style.overflow = "hidden"
 
     return () => {
-      document.removeEventListener('keydown', onKeyDown);
-      document.body.style.overflow = '';
-    };
-  }, [open, close]);
+      document.removeEventListener("keydown", onKeyDown)
+      document.body.style.overflow = ""
+    }
+  }, [open, close])
 
   return (
     <>
@@ -37,43 +35,41 @@ export function ExpandableImage({ src }: { src: string }) {
       >
         <img
           src={src}
-          alt=""
+          alt={alt ?? ""}
           referrerPolicy="no-referrer"
-          className="w-full max-h-72 object-cover object-top transition-transform duration-300 hover:scale-[1.02]"
+          className="max-h-72 w-full object-cover object-top transition-transform duration-300 hover:scale-[1.02]"
         />
       </button>
 
       {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-8">
-          <div
-            className="absolute inset-0"
-            onClick={close}
-          />
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 sm:p-8"
+        >
+          <div className="absolute inset-0" onClick={close} />
 
           <button
             type="button"
+            aria-label="Close image"
             onClick={close}
-            className="absolute right-4 top-4 z-10 rounded-full bg-black/50 p-2 text-white transition-colors hover:bg-black/70"
+            className="absolute top-4 right-4 z-10 rounded-full bg-black/50 p-2 text-white transition-colors hover:bg-black/70"
           >
             <XIcon className="size-5" />
           </button>
 
-          <div
-            className={`relative z-10 ${zoomed ? 'max-h-[90vh] overflow-auto cursor-zoom-out' : 'flex items-center justify-center cursor-zoom-in'}`}
+          <img
+            src={src}
+            alt={alt ?? ""}
+            referrerPolicy="no-referrer"
+            className="relative z-10 max-h-[85vh] max-w-[calc(100vw-2rem)] rounded object-contain sm:max-w-[85vw]"
             onClick={(e) => {
-              e.stopPropagation();
-              setZoomed((z) => !z);
+              e.stopPropagation()
+              close()
             }}
-          >
-            <img
-              src={src}
-              alt=""
-              referrerPolicy="no-referrer"
-              className={`rounded transition-all duration-300 ${zoomed ? 'max-w-none w-auto' : 'max-h-[80vh] max-w-[85vw] object-contain'}`}
-            />
-          </div>
+          />
         </div>
       )}
     </>
-  );
+  )
 }

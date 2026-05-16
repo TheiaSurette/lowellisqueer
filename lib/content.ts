@@ -1,37 +1,54 @@
-import fs from 'fs/promises';
-import path from 'path';
-import type { Meetup, Resource, SocialLink } from './types';
+import fs from "fs/promises"
+import path from "path"
+import type { Meetup, PrideSpotlight, Resource, SocialLink } from "./types"
 
-const contentDir = path.join(process.cwd(), 'content');
+const contentDir = path.join(process.cwd(), "content")
+
+async function readContentFile(filename: string): Promise<string> {
+  try {
+    return await fs.readFile(path.join(contentDir, filename), "utf-8")
+  } catch (error) {
+    throw new Error(`Failed to read content file: ${filename}`, {
+      cause: error,
+    })
+  }
+}
+
+async function readJsonContent<T>(filename: string): Promise<T> {
+  const raw = await readContentFile(filename)
+  try {
+    return JSON.parse(raw) as T
+  } catch (error) {
+    throw new Error(`Failed to parse content file: ${filename}`, {
+      cause: error,
+    })
+  }
+}
 
 export async function getAboutContent(): Promise<string> {
-  return fs.readFile(path.join(contentDir, 'about.mdx'), 'utf-8');
+  return readContentFile("about.mdx")
 }
 
 export async function getResourcesContent(): Promise<string> {
-  return fs.readFile(path.join(contentDir, 'resources.mdx'), 'utf-8');
-}
-
-export async function getGuidelines(): Promise<string[]> {
-  const raw = await fs.readFile(path.join(contentDir, 'guidelines.json'), 'utf-8');
-  return JSON.parse(raw) as string[];
+  return readContentFile("resources.mdx")
 }
 
 export async function getSocialLinks(): Promise<SocialLink[]> {
-  const raw = await fs.readFile(path.join(contentDir, 'social-links.json'), 'utf-8');
-  return JSON.parse(raw) as SocialLink[];
+  return readJsonContent<SocialLink[]>("social-links.json")
 }
 
 export async function getMeetupsContent(): Promise<string> {
-  return fs.readFile(path.join(contentDir, 'meetups.mdx'), 'utf-8');
+  return readContentFile("meetups.mdx")
 }
 
 export async function getMeetups(): Promise<Meetup[]> {
-  const raw = await fs.readFile(path.join(contentDir, 'meetups.json'), 'utf-8');
-  return JSON.parse(raw) as Meetup[];
+  return readJsonContent<Meetup[]>("meetups.json")
 }
 
 export async function getResources(): Promise<Resource[]> {
-  const raw = await fs.readFile(path.join(contentDir, 'resources.json'), 'utf-8');
-  return JSON.parse(raw) as Resource[];
+  return readJsonContent<Resource[]>("resources.json")
+}
+
+export async function getPrideSpotlights(): Promise<PrideSpotlight[]> {
+  return readJsonContent<PrideSpotlight[]>("pride-spotlights.json")
 }

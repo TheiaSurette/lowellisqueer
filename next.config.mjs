@@ -1,12 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   cacheComponents: true,
+  serverExternalPackages: ['@resvg/resvg-js'],
   images: {
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
+      { hostname: '*.googleusercontent.com' },
+      { hostname: 'lh3.googleusercontent.com' },
+      { hostname: '*.google.com' },
     ],
   },
   async redirects() {

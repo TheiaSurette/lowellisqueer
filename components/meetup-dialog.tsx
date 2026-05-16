@@ -1,13 +1,19 @@
-'use client';
+"use client"
 
-import { useState } from 'react';
-import { Dialog } from '@base-ui/react/dialog';
-import { CalendarClockIcon, MapPinIcon, XIcon } from 'lucide-react';
-import type { Meetup } from '@/lib/types';
-import { MeetupCard } from './meetup-card';
+import { useState } from "react"
+import { Dialog } from "@base-ui/react/dialog"
+import { CalendarClockIcon, MapPinIcon, XIcon } from "lucide-react"
+import type { Meetup } from "@/lib/types"
+import { MeetupCard } from "./meetup-card"
 
-export function MeetupWithDialog({ meetup, index }: { meetup: Meetup; index: number }) {
-  const [open, setOpen] = useState(false);
+export function MeetupWithDialog({
+  meetup,
+  index,
+}: {
+  meetup: Meetup
+  index: number
+}) {
+  const [open, setOpen] = useState(false)
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
@@ -34,14 +40,17 @@ export function MeetupWithDialog({ meetup, index }: { meetup: Meetup; index: num
               <span>{meetup.location}</span>
             </div>
           </div>
-          <p className="mt-4 text-sm font-light leading-relaxed text-muted-foreground">
+          <p className="mt-4 text-sm leading-relaxed font-light text-muted-foreground">
             {meetup.details}
           </p>
-          <Dialog.Close className="absolute top-4 right-4 cursor-pointer text-muted-foreground transition-colors hover:text-foreground">
+          <Dialog.Close
+            aria-label="Close"
+            className="absolute top-4 right-4 cursor-pointer text-muted-foreground transition-colors hover:text-foreground"
+          >
             <XIcon className="size-4" />
           </Dialog.Close>
         </Dialog.Popup>
       </Dialog.Portal>
     </Dialog.Root>
-  );
+  )
 }

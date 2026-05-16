@@ -1,5 +1,11 @@
 import { Suspense } from "react"
 import Link from "next/link"
+import {
+  ArrowRightIcon,
+  CalendarIcon,
+  ClockIcon,
+  MapPinIcon,
+} from "lucide-react"
 import { cacheLife, cacheTag } from "next/cache"
 import { fetchEvents, filterFeatured } from "@/lib/google-calendar"
 import {
@@ -9,28 +15,40 @@ import {
   formatDay,
   stripHtmlPreserveBreaks,
 } from "@/lib/format"
-import { spectrumColor, spectrumTextColor } from "@/lib/spectrum"
+import {
+  spectrumColor,
+  spectrumTextColor,
+  SPECTRUM,
+  SPECTRUM_GRADIENT,
+} from "@/lib/spectrum"
 import {
   EventsSkeleton,
   UpcomingRowsSkeleton,
 } from "@/components/events-skeleton"
 import { HeroWordCycle } from "@/components/hero-word-cycle"
 import { NewsletterSignup } from "@/components/newsletter-signup"
+import { PrideMiniCarousel } from "@/components/pride-mini-carousel"
 import type { CalendarEvent } from "@/lib/types"
+
+async function getHomeEvents() {
+  "use cache"
+  cacheLife("minutes")
+  cacheTag("events")
+
+  return fetchEvents({ maxResults: 100 })
+}
 
 function FeaturedCard({
   event,
   index,
-  large,
 }: {
   event: CalendarEvent
   index: number
-  large?: boolean
 }) {
   const color = spectrumColor(index)
 
   return (
-    <a
+    <Link
       href={`/events/${event.id}`}
       className="group block border-l-[3px] px-6 py-5 transition-all hover:border-l-[6px] hover:bg-accent/60 hover:pl-[21px]"
       style={{ borderLeftColor: color }}
@@ -40,25 +58,32 @@ function FeaturedCard({
           src={event.imageUrl}
           alt=""
           referrerPolicy="no-referrer"
-          className={`mb-4 w-full rounded object-cover object-top ${large ? "max-h-72" : "max-h-48"}`}
+          className="mb-4 max-h-48 w-full rounded object-cover object-top"
         />
       )}
-      <h3
-        className={`font-heading leading-tight font-bold ${large ? "text-[2rem]" : "text-xl"} mb-3`}
-      >
+      <h3 className="mb-3 font-heading text-xl leading-tight font-bold">
         {event.title}
       </h3>
       <p className="mb-5 line-clamp-3 text-[0.95rem] leading-relaxed font-light whitespace-pre-line opacity-85">
         {stripHtmlPreserveBreaks(event.description)}
       </p>
       <div className="flex flex-wrap gap-5 text-xs font-normal text-muted-foreground">
-        <span>{formatDate(event.start)}</span>
-        <span>
+        <span className="flex items-center gap-1.5">
+          <CalendarIcon className="size-3" />
+          {formatDate(event.start)}
+        </span>
+        <span className="flex items-center gap-1.5">
+          <ClockIcon className="size-3" />
           {formatTime(event.start)} &ndash; {formatTime(event.end)}
         </span>
-        <span>{event.location}</span>
+        {event.location && (
+          <span className="flex items-center gap-1.5">
+            <MapPinIcon className="size-3" />
+            {event.location}
+          </span>
+        )}
       </div>
-    </a>
+    </Link>
   )
 }
 
@@ -72,7 +97,7 @@ function UpcomingRow({
   const color = spectrumTextColor(index)
 
   return (
-    <a
+    <Link
       href={`/events/${event.id}`}
       className="group relative grid grid-cols-[80px_1fr_auto] items-center gap-8 border-b border-border py-4 transition-colors before:absolute before:top-0 before:bottom-0 before:left-0 before:w-0 before:transition-all before:duration-300 hover:bg-background/50 hover:before:w-[3px] max-sm:grid-cols-[60px_1fr] max-sm:gap-5"
       style={
@@ -106,46 +131,86 @@ function UpcomingRow({
       <div className="pr-4 text-right text-sm font-light text-muted-foreground italic max-sm:col-span-full max-sm:pl-0 max-sm:text-left">
         {event.location}
       </div>
-    </a>
+    </Link>
   )
 }
 
-async function FeaturedEvents() {
-  "use cache"
-  cacheLife("minutes")
-  cacheTag("featured-events")
+async function PrideBanner() {
+  const events = await getHomeEvents()
+  const prideImages = events
+    .filter((e) => e.tags.includes("PrideFeatured") && e.imageUrl)
+    .map((e) => e.imageUrl!)
 
-  const events = await fetchEvents({ maxResults: 50 })
-  const featured = filterFeatured(events).slice(0, 4)
-
-  if (featured.length === 0) return null
-
-  const first = featured[0]
-  const rest = featured.slice(1)
+  const shimmerBg = { backgroundImage: SPECTRUM_GRADIENT }
+  const rainbowText: React.CSSProperties = {
+    backgroundImage: `linear-gradient(to right, ${SPECTRUM.join(", ")})`,
+    WebkitBackgroundClip: "text",
+    backgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+  }
 
   return (
     <section className="mx-auto max-w-[1100px] px-8 pb-14">
-      <div className="mb-6 text-xs font-medium tracking-[0.2em] text-spectrum-red uppercase">
-        Featured
-      </div>
-      <div className="grid grid-cols-[2fr_1fr] gap-8 max-md:grid-cols-1">
-        <FeaturedCard event={first} index={0} large />
-        <div className="flex flex-col gap-8">
-          {rest.map((event, i) => (
-            <FeaturedCard key={event.id} event={event} index={i + 1} />
-          ))}
+      <div
+        className="pride-shimmer p-[3px] shadow-lg shadow-primary/15"
+        style={shimmerBg}
+      >
+        <div className="bg-background">
+          {prideImages.length > 0 && <PrideMiniCarousel images={prideImages} />}
+          <div className="flex flex-wrap items-center justify-between gap-8 px-6 py-8 sm:px-10 sm:py-10">
+            <div>
+              <h2 className="font-heading text-4xl font-black tracking-tight sm:text-5xl">
+                <span
+                  style={{
+                    ...rainbowText,
+                    filter: "drop-shadow(-1px 2px 0 rgba(0,0,0,1))",
+                  }}
+                >
+                  Lowell Pride
+                </span>
+              </h2>
+              <p className="mt-3 max-w-md text-sm leading-relaxed font-light text-muted-foreground sm:text-base">
+                Lowell is turning it up for Pride this year. Drag, dancing,
+                marching, and more all month long. Don&apos;t miss a thing.
+              </p>
+            </div>
+            <Link
+              href="/pride"
+              className="group inline-flex items-center gap-2 border-2 border-primary bg-primary px-6 py-3 text-xs font-medium tracking-wider text-primary-foreground uppercase transition-colors hover:bg-primary/90"
+            >
+              Explore Pride Events
+              <ArrowRightIcon className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+            </Link>
+          </div>
         </div>
       </div>
     </section>
   )
 }
 
-async function UpcomingEvents() {
-  "use cache"
-  cacheLife("minutes")
-  cacheTag("events")
+async function FeaturedEvents() {
+  const events = await getHomeEvents()
+  const featured = filterFeatured(events).slice(0, 4)
 
-  const events = await fetchEvents({ maxResults: 6 })
+  if (featured.length === 0) return null
+
+  return (
+    <section className="mx-auto max-w-[1100px] px-8 pb-14">
+      <div className="mb-6 text-xs font-medium tracking-[0.2em] text-spectrum-red uppercase">
+        Featured
+      </div>
+      <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
+        {featured.map((event, i) => (
+          <FeaturedCard key={event.id} event={event} index={i} />
+        ))}
+      </div>
+    </section>
+  )
+}
+
+async function UpcomingEvents() {
+  const allEvents = await getHomeEvents()
+  const events = allEvents.slice(0, 6)
 
   if (events.length === 0) {
     return (
@@ -203,6 +268,10 @@ export default function HomePage() {
           Lowell, Massachusetts.
         </p>
       </section>
+
+      <Suspense>
+        <PrideBanner />
+      </Suspense>
 
       <Suspense fallback={<EventsSkeleton count={3} />}>
         <FeaturedEvents />
