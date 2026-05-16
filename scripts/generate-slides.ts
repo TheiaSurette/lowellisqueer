@@ -69,7 +69,10 @@ async function fetchEvents(
       title: e.summary ?? "(No title)",
       description: desc
         .replace(/#featured\s*/gi, "")
-        .replace(/#image:\s*(?:<a[^>]*>)?https?:\/\/[^\s<]+(?:<\/a>)?\s*/gi, "")
+        .replace(
+          /(?:<[^>]*>)*#image:\s*(?:<[^>]*>)*https?:\/\/[^\s<]+(?:<\/[^>]*>)*\s*/gi,
+          ""
+        )
         .replace(/#tags:\s*"[^"]*"\s*/gi, "")
         .trim(),
       rawDescription: desc,

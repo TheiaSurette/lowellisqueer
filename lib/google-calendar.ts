@@ -22,10 +22,8 @@ type GoogleCalendarResponse = {
 }
 
 export function extractImageUrl(description: string): string | null {
-  // Match #image: followed by a URL (possibly wrapped in an <a> tag by Google)
-  const match = description.match(
-    /#image:\s*(?:<a[^>]*>)?(https?:\/\/[^\s<]+)(?:<\/a>)?/i
-  )
+  // Match #image: followed by a URL, possibly wrapped in <a>, <u>, <span> etc. by Google
+  const match = description.match(/#image:\s*(?:<[^>]*>)*(https?:\/\/[^\s<]+)/i)
   if (!match) return null
 
   const url = match[1]
@@ -57,7 +55,10 @@ function extractTags(description: string): string[] {
 
 function stripTags(description: string): string {
   return description
-    .replace(/#image:\s*(?:<a[^>]*>)?https?:\/\/[^\s<]+(?:<\/a>)?\s*/gi, "")
+    .replace(
+      /(?:<[^>]*>)*#image:\s*(?:<[^>]*>)*https?:\/\/[^\s<]+(?:<\/[^>]*>)*\s*/gi,
+      ""
+    )
     .replace(/#tags:\s*"[^"]*"\s*/gi, "")
     .trim()
 }
