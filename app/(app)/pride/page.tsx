@@ -21,7 +21,7 @@ async function PrideGalleryLoader() {
   cacheTag("pride-events")
 
   const [events, spotlights] = await Promise.all([
-    fetchEvents({ maxResults: 100 }),
+    fetchEvents({ maxResults: 500 }),
     getPrideSpotlights(),
   ])
   const now = new Date()

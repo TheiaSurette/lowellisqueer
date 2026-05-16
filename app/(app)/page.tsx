@@ -35,7 +35,7 @@ async function getHomeEvents() {
   cacheLife("minutes")
   cacheTag("events")
 
-  return fetchEvents({ maxResults: 100 })
+  return fetchEvents({ maxResults: 500 })
 }
 
 function FeaturedCard({

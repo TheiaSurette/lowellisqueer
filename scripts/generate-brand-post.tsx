@@ -3,6 +3,7 @@ import { Resvg } from "@resvg/resvg-js"
 import fs from "fs/promises"
 import path from "path"
 import { loadFont, FONT_URLS } from "../lib/fonts"
+import { SPECTRUM } from "../lib/spectrum"
 
 const RAINBOW = [
   "#E40303",
@@ -133,6 +134,163 @@ function LogoPost({ logoBase64 }: { logoBase64: string }) {
   )
 }
 
+function PrideGuidePost({ logoBase64 }: { logoBase64: string }) {
+  const stripeHeight = Math.ceil(1350 / SPECTRUM.length)
+  return (
+    <div
+      style={{
+        width: 1080,
+        height: 1350,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        position: "relative",
+        fontFamily: "Fraunces",
+        overflow: "hidden",
+      }}
+    >
+      {/* Rainbow stripe background */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        {SPECTRUM.map((color, i) => (
+          <div
+            key={i}
+            style={{
+              width: "100%",
+              height: stripeHeight,
+              backgroundColor: color,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Content card */}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#FCFAF7",
+          borderRadius: 32,
+          padding: "96px 72px",
+          margin: "0 48px",
+          boxShadow: "0 24px 64px rgba(0,0,0,0.3)",
+        }}
+      >
+        <img
+          alt=""
+          src={logoBase64}
+          width={390}
+          height={317}
+          style={{ marginBottom: 56 }}
+        />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 0,
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              fontSize: 112,
+              fontWeight: 900,
+              color: "#1C1917",
+              lineHeight: 1.1,
+            }}
+          >
+            Lowell is
+          </div>
+          <div
+            style={{
+              display: "flex",
+              position: "relative",
+              marginTop: -10,
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                fontSize: 168,
+                fontWeight: 900,
+                color: "#000000",
+                lineHeight: 1.1,
+                position: "absolute",
+                left: -4,
+                top: 4,
+              }}
+            >
+              Queer
+            </div>
+            <div
+              style={{
+                display: "flex",
+                fontSize: 168,
+                fontWeight: 900,
+                color: "#000000",
+                lineHeight: 1.1,
+                position: "absolute",
+                left: -1,
+                top: 1,
+              }}
+            >
+              Queer
+            </div>
+            <div
+              style={{
+                display: "flex",
+                fontSize: 168,
+                fontWeight: 900,
+                lineHeight: 1.1,
+                backgroundImage: generateGradient(RAINBOW),
+                backgroundClip: "text",
+                color: "transparent",
+              }}
+            >
+              Queer
+            </div>
+          </div>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            marginTop: 48,
+            fontSize: 64,
+            fontWeight: 700,
+            color: "#78716C",
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+            fontFamily: "Sora",
+          }}
+        >
+          Pride Guide
+        </div>
+        <div
+          style={{
+            display: "flex",
+            marginTop: 28,
+            fontSize: 36,
+            color: "#A8A29E",
+            fontFamily: "Sora",
+          }}
+        >
+          lowellisqueer.com/pride
+        </div>
+      </div>
+    </div>
+  )
+}
+
 async function main() {
   const logoPath = path.join(process.cwd(), "public", "lowell-logo.png")
 
@@ -144,9 +302,11 @@ async function main() {
   const pngBuffer = await fs.readFile(pngLogoPath)
   const logoBase64 = `data:image/png;base64,${pngBuffer.toString("base64")}`
 
-  const [fraunces, frauncesBlack] = await Promise.all([
+  const [fraunces, frauncesBlack, sora, soraMedium] = await Promise.all([
     loadFont(FONT_URLS.fraunces),
     loadFont(FONT_URLS.frauncesBlack),
+    loadFont(FONT_URLS.sora),
+    loadFont(FONT_URLS.soraMedium),
   ])
 
   const fonts = [
@@ -160,6 +320,18 @@ async function main() {
       name: "Fraunces",
       data: frauncesBlack,
       weight: 900 as const,
+      style: "normal" as const,
+    },
+    {
+      name: "Sora",
+      data: sora,
+      weight: 400 as const,
+      style: "normal" as const,
+    },
+    {
+      name: "Sora",
+      data: soraMedium,
+      weight: 500 as const,
       style: "normal" as const,
     },
   ]
@@ -194,6 +366,21 @@ async function main() {
   const logoOutputPath = path.join(outputDir, "logo-post.png")
   await fs.writeFile(logoOutputPath, logoPng)
   console.log(`Generated: ${logoOutputPath}`)
+
+  const prideSvg = await satori(PrideGuidePost({ logoBase64 }), {
+    width: 1080,
+    height: 1350,
+    fonts,
+  })
+
+  const prideResvg = new Resvg(prideSvg, {
+    fitTo: { mode: "width", value: 1080 },
+  })
+  const pridePng = prideResvg.render().asPng()
+
+  const prideOutputPath = path.join(outputDir, "pride-guide-post.png")
+  await fs.writeFile(prideOutputPath, pridePng)
+  console.log(`Generated: ${prideOutputPath}`)
 }
 
 main().catch((err) => {

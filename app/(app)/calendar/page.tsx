@@ -24,7 +24,7 @@ async function ScheduleView() {
   cacheLife("minutes")
   cacheTag("events")
 
-  const events = await fetchEvents({ maxResults: 100 })
+  const events = await fetchEvents({ maxResults: 500 })
 
   if (events.length === 0) {
     return (
