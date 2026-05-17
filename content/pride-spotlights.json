@@ -1,13 +1,62 @@
 [
   {
-    "name": "Mira Ve - Colombian Street Food",
-    "location": "105 Mammoth Rd, Lowell MA",
-    "description": "Latina owned Colombian street food restaurant serving up the real flavors of Colombia right here in Lowell!"
-  },
-  {
     "name": "Cafe Eclipse",
     "location": "12 Cardinal Oconnell Pkwy, Lowell, MA",
-    "description": "Cozy community oriented cafe known for its welcome vibe and quality coffee.",
+    "description": "Cozy community-oriented cafe known for its welcome vibe and quality coffee. Live music every Friday 12-1. Also see Astro Flora on display through June!",
     "website": "https://www.cafeeclipse.com"
+  },
+  {
+    "name": "Fuse Bistro — Cozy Downtown Lowell Eatery",
+    "location": "45 Palmer St, Lowell, MA",
+    "description": "Located in a converted firehouse in downtown Lowell, enjoy creative American fare, fresh seasonal ingredients, and dynamic menus.",
+    "website": "https://www.fusebistro.com/"
+  },
+  {
+    "name": "lala books",
+    "location": "189 Market St, Lowell, MA",
+    "description": "Best books in town! While you're there, support the Share the Love Book Drive.",
+    "website": "https://lalabookstore.com/"
+  },
+  {
+    "name": "Lowell General Store",
+    "location": "53 Market St., Lowell, MA",
+    "description": "Shop small with products from the best local brands of the Greater Lowell area.",
+    "website": "https://lowellgeneralstore.com/"
+  },
+  {
+    "name": "Mira Ve - Colombian Street Food",
+    "location": "105 Mammoth Rd, Lowell MA",
+    "description": "Latina-owned Colombian street food restaurant serving up the real flavors of Colombia right here in Lowell!",
+    "website": "https://www.miravefood.com/"
+  },
+  {
+    "name": "One Urban Tribe - Local Shop",
+    "location": "167 Market St., Lowell, MA",
+    "description": "We carry a variety of locally sourced, handmade goods as well as some global selections.",
+    "website": "https://www.oneurbantribe.com/"
+  },
+  {
+    "name": "Over the Spoon - Kitchen Store",
+    "location": "101 Paige Street, Lowell, MA",
+    "description": "Visit this store, located in the Hive Public Market, and fall in love with your kitchen.",
+    "website": "https://www.instagram.com/overthespoonma/"
+  },
+  {
+    "name": "Pop Cultured - Unique Pop Culture Finds",
+    "location": "58 Prescott St, Lowell, MA",
+    "description": "Located canalside, through the brick tunnel. Geek culture, MTG, gaming, collectibles, clothes, books, and costuming!",
+    "website": "https://www.shoppopcultured.com/"
+  },
+  {
+    "name": "Simply Khmer Restaurant",
+    "location": "26 Lincoln St Unit #1, Lowell, MA",
+    "description": "Relaxed, unfussy restaurant offering an expansive menu of traditional Cambodian dishes. Vegetarian options. High chairs.",
+    "website": "https://www.simplykhmer.co/"
+  },
+    {
+    "name": "Warp and Weft - American Comfort Food",
+    "location": "26 Lincoln St Unit #1, Lowell, MA",
+    "description": "Pub grub served in a convivial, brick-lined eatery featuring craft beer on tap & regular live music. Brunch every Saturday and Sunday from 11AM until 3PM.",
+    "website": "https://www.warplowell.com/"
   }
 ]
