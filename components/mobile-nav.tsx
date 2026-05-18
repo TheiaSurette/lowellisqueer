@@ -10,11 +10,12 @@ const NAV_LINKS = [
   { href: "/pride", label: "Pride" },
   { href: "/about", label: "About" },
   { href: "/calendar", label: "Calendar" },
+  { href: "/submit", label: "Submit" },
   { href: "/resources", label: "Resources" },
   { href: "/meetups", label: "Meetups" },
 ]
 
-export function MobileNav({ formUrl }: { formUrl?: string }) {
+export function MobileNav() {
   const [open, setOpen] = useState(false)
 
   return (
@@ -68,20 +69,6 @@ export function MobileNav({ formUrl }: { formUrl?: string }) {
                 {link.label}
               </Link>
             ))}
-            {formUrl && (
-              <a
-                href={formUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 py-3 text-sm font-normal tracking-[0.18em] text-muted-foreground uppercase transition-colors hover:text-primary"
-              >
-                <span
-                  className="size-[6px] shrink-0 rounded-full"
-                  style={{ background: SPECTRUM[4] }}
-                />
-                Submit
-              </a>
-            )}
           </nav>
         </Dialog.Popup>
       </Dialog.Portal>

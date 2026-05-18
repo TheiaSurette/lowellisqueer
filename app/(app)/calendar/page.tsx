@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { Suspense } from "react"
+import Link from "next/link"
 import { cacheLife, cacheTag } from "next/cache"
 import { PlusCircleIcon } from "lucide-react"
 import { GoogleCalendarIcon } from "@/components/icons/google-calendar"
@@ -11,6 +12,7 @@ import {
 import { serializeEvent } from "@/lib/types"
 import { CalendarViewToggle } from "@/components/calendar-view-toggle"
 import { NewsletterSignup } from "@/components/newsletter-signup"
+import { SubmitEventCta } from "@/components/submit-event-cta"
 import { ScheduleList } from "@/components/schedule-list"
 import { ScheduleSkeleton } from "@/components/events-skeleton"
 
@@ -42,7 +44,6 @@ async function ScheduleView() {
 export default function CalendarPage() {
   const addToCalendarUrl = getAddToCalendarUrl()
   const embedUrl = getEmbedUrl("MONTH")
-  const formUrl = process.env.NEXT_PUBLIC_EVENT_FORM_URL
 
   return (
     <div className="mx-auto max-w-[1100px] px-8 py-16">
@@ -60,17 +61,13 @@ export default function CalendarPage() {
             <GoogleCalendarIcon className="size-4.5" />
             Add Google Calendar
           </a>
-          {formUrl && (
-            <a
-              href={formUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 border-2 border-border px-4 py-2 text-xs font-medium tracking-wider text-muted-foreground uppercase transition-colors hover:border-primary hover:text-primary"
-            >
-              <PlusCircleIcon className="size-3.5" />
-              Submit Event
-            </a>
-          )}
+          <Link
+            href="/submit"
+            className="inline-flex items-center gap-2 border-2 border-border px-4 py-2 text-xs font-medium tracking-wider text-muted-foreground uppercase transition-colors hover:border-primary hover:text-primary"
+          >
+            <PlusCircleIcon className="size-3.5" />
+            Submit Event
+          </Link>
         </div>
       </div>
 
@@ -84,6 +81,8 @@ export default function CalendarPage() {
       />
 
       <NewsletterSignup />
+
+      <SubmitEventCta />
     </div>
   )
 }

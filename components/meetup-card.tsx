@@ -1,4 +1,3 @@
-import Image from "next/image"
 import { CalendarClockIcon, MapPinIcon } from "lucide-react"
 import type { Meetup } from "@/lib/types"
 import { spectrumColor } from "@/lib/spectrum"
@@ -15,12 +14,10 @@ export function MeetupCard({
   return (
     <div className="overflow-hidden border-2 border-border transition-colors hover:border-primary">
       <div className="relative aspect-[16/9] bg-accent/20">
-        <Image
+        <img
           src={meetup.image}
           alt={meetup.name}
-          fill
-          className="object-cover"
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="absolute inset-0 h-full w-full object-cover"
         />
         <div
           className="absolute bottom-0 left-0 h-1 w-full"

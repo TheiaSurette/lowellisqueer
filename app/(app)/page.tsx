@@ -27,6 +27,7 @@ import {
 } from "@/components/events-skeleton"
 import { HeroWordCycle } from "@/components/hero-word-cycle"
 import { NewsletterSignup } from "@/components/newsletter-signup"
+import { SubmitEventCta } from "@/components/submit-event-cta"
 import { PrideMiniCarousel } from "@/components/pride-mini-carousel"
 import type { CalendarEvent } from "@/lib/types"
 
@@ -278,6 +279,8 @@ export default function HomePage() {
       </Suspense>
 
       <NewsletterSignup />
+
+      <SubmitEventCta />
 
       <Suspense fallback={<UpcomingRowsSkeleton count={6} />}>
         <UpcomingEvents />

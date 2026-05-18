@@ -76,8 +76,6 @@ export default function AppLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const formUrl = process.env.NEXT_PUBLIC_EVENT_FORM_URL
-
   return (
     <>
       <header className="mx-auto max-w-[1100px] px-8 pt-8">
@@ -95,7 +93,7 @@ export default function AppLayout({
             />
             Lowell Is Queer
           </Link>
-          <MobileNav formUrl={formUrl} />
+          <MobileNav />
           <nav className="hidden items-center sm:flex">
             <Link
               href="/pride"
@@ -127,32 +125,23 @@ export default function AppLayout({
               className="size-[5px] shrink-0 rounded-full"
               style={{ background: NAV_SEPS[2] }}
             />
-            <Link href="/resources" className={navLinkClass}>
-              Resources
+            <Link href="/submit" className={navLinkClass}>
+              Submit
             </Link>
             <span
               className="size-[5px] shrink-0 rounded-full"
               style={{ background: NAV_SEPS[3] }}
             />
+            <Link href="/resources" className={navLinkClass}>
+              Resources
+            </Link>
+            <span
+              className="size-[5px] shrink-0 rounded-full"
+              style={{ background: NAV_SEPS[4] }}
+            />
             <Link href="/meetups" className={navLinkClass}>
               Meetups
             </Link>
-            {formUrl && (
-              <>
-                <span
-                  className="size-[5px] shrink-0 rounded-full"
-                  style={{ background: NAV_SEPS[4] }}
-                />
-                <a
-                  href={formUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={navLinkClass}
-                >
-                  Submit
-                </a>
-              </>
-            )}
           </nav>
         </div>
       </header>
