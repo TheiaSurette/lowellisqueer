@@ -1,4 +1,5 @@
 import type { CalendarEvent } from "@/lib/types"
+import { INTERNAL_TAGS } from "@/lib/tags"
 import { SPECTRUM } from "@/lib/spectrum"
 import {
   formatDay,
@@ -214,7 +215,7 @@ export function WeeklySlide({
                     {event.location}
                   </div>
                 )}
-                {event.tags.length > 0 && (
+                {event.tags.filter((t) => !INTERNAL_TAGS.has(t)).length > 0 && (
                   <div
                     style={{
                       display: "flex",
@@ -223,7 +224,7 @@ export function WeeklySlide({
                       marginTop: 8,
                     }}
                   >
-                    {event.tags.map((tag) => (
+                    {event.tags.filter((t) => !INTERNAL_TAGS.has(t)).map((tag) => (
                       <div
                         key={tag}
                         style={{
