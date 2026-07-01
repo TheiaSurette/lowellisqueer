@@ -7,7 +7,6 @@ import Link from "next/link"
 import { SPECTRUM } from "@/lib/spectrum"
 
 const NAV_LINKS = [
-  { href: "/pride", label: "Pride" },
   { href: "/about", label: "About" },
   { href: "/calendar", label: "Calendar" },
   { href: "/submit", label: "Submit" },
@@ -46,21 +45,7 @@ export function MobileNav() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className={`flex items-center gap-3 py-3 text-sm tracking-[0.18em] uppercase transition-colors ${
-                  link.href === "/pride"
-                    ? "pride-shimmer font-bold"
-                    : "font-normal text-muted-foreground hover:text-primary"
-                }`}
-                style={
-                  link.href === "/pride"
-                    ? {
-                        backgroundImage: `linear-gradient(90deg, ${[...SPECTRUM, SPECTRUM[0]].join(", ")})`,
-                        WebkitBackgroundClip: "text",
-                        backgroundClip: "text",
-                        WebkitTextFillColor: "transparent",
-                      }
-                    : undefined
-                }
+                className="flex items-center gap-3 py-3 text-sm font-normal tracking-[0.18em] text-muted-foreground uppercase transition-colors hover:text-primary"
               >
                 <span
                   className="size-[6px] shrink-0 rounded-full"

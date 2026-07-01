@@ -5,14 +5,13 @@ import { getSocialLinks } from "@/lib/content"
 import { MobileNav } from "@/components/mobile-nav"
 import { SpectrumDots } from "@/components/spectrum-dots"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { SPECTRUM, SPECTRUM_GRADIENT } from "@/lib/spectrum"
+import { SPECTRUM } from "@/lib/spectrum"
 
 const NAV_SEPS = [
   SPECTRUM[0],
   SPECTRUM[1],
   SPECTRUM[2],
   SPECTRUM[3],
-  SPECTRUM[4],
 ]
 const navLinkClass =
   "px-3.5 text-xs font-normal uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-primary"
@@ -95,49 +94,33 @@ export default function AppLayout({
           </Link>
           <MobileNav />
           <nav className="hidden items-center sm:flex">
-            <Link
-              href="/pride"
-              className="pride-shimmer px-3.5 text-xs font-bold tracking-[0.18em] uppercase"
-              style={{
-                backgroundImage: SPECTRUM_GRADIENT,
-                WebkitBackgroundClip: "text",
-                backgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}
-            >
-              Pride
-            </Link>
-            <span
-              className="size-[5px] shrink-0 rounded-full"
-              style={{ background: NAV_SEPS[0] }}
-            />
             <Link href="/about" className={navLinkClass}>
               About
             </Link>
             <span
               className="size-[5px] shrink-0 rounded-full"
-              style={{ background: NAV_SEPS[1] }}
+              style={{ background: NAV_SEPS[0] }}
             />
             <Link href="/calendar" className={navLinkClass}>
               Calendar
             </Link>
             <span
               className="size-[5px] shrink-0 rounded-full"
-              style={{ background: NAV_SEPS[2] }}
+              style={{ background: NAV_SEPS[1] }}
             />
             <Link href="/submit" className={navLinkClass}>
               Submit
             </Link>
             <span
               className="size-[5px] shrink-0 rounded-full"
-              style={{ background: NAV_SEPS[3] }}
+              style={{ background: NAV_SEPS[2] }}
             />
             <Link href="/resources" className={navLinkClass}>
               Resources
             </Link>
             <span
               className="size-[5px] shrink-0 rounded-full"
-              style={{ background: NAV_SEPS[4] }}
+              style={{ background: NAV_SEPS[3] }}
             />
             <Link href="/meetups" className={navLinkClass}>
               Meetups

@@ -1,7 +1,6 @@
 import { Suspense } from "react"
 import Link from "next/link"
 import {
-  ArrowRightIcon,
   CalendarIcon,
   ClockIcon,
   MapPinIcon,
@@ -15,12 +14,7 @@ import {
   formatDay,
   stripHtmlPreserveBreaks,
 } from "@/lib/format"
-import {
-  spectrumColor,
-  spectrumTextColor,
-  SPECTRUM,
-  SPECTRUM_GRADIENT,
-} from "@/lib/spectrum"
+import { spectrumColor, spectrumTextColor } from "@/lib/spectrum"
 import {
   EventsSkeleton,
   UpcomingRowsSkeleton,
@@ -28,7 +22,6 @@ import {
 import { HeroWordCycle } from "@/components/hero-word-cycle"
 import { NewsletterSignup } from "@/components/newsletter-signup"
 import { SubmitEventCta } from "@/components/submit-event-cta"
-import { PrideMiniCarousel } from "@/components/pride-mini-carousel"
 import type { CalendarEvent } from "@/lib/types"
 
 async function getHomeEvents() {
@@ -136,59 +129,6 @@ function UpcomingRow({
   )
 }
 
-async function PrideBanner() {
-  const events = await getHomeEvents()
-  const prideImages = events
-    .filter((e) => e.tags.includes("PrideFeatured") && e.imageUrl)
-    .map((e) => e.imageUrl!)
-
-  const shimmerBg = { backgroundImage: SPECTRUM_GRADIENT }
-  const rainbowText: React.CSSProperties = {
-    backgroundImage: `linear-gradient(to right, ${SPECTRUM.join(", ")})`,
-    WebkitBackgroundClip: "text",
-    backgroundClip: "text",
-    WebkitTextFillColor: "transparent",
-  }
-
-  return (
-    <section className="mx-auto max-w-[1100px] px-8 pb-14">
-      <div
-        className="pride-shimmer p-[3px] shadow-lg shadow-primary/15"
-        style={shimmerBg}
-      >
-        <div className="bg-background">
-          {prideImages.length > 0 && <PrideMiniCarousel images={prideImages} />}
-          <div className="flex flex-wrap items-center justify-between gap-8 px-6 py-8 sm:px-10 sm:py-10">
-            <div>
-              <h2 className="font-heading text-4xl font-black tracking-tight sm:text-5xl">
-                <span
-                  style={{
-                    ...rainbowText,
-                    filter: "drop-shadow(-1px 2px 0 rgba(0,0,0,1))",
-                  }}
-                >
-                  Lowell Pride
-                </span>
-              </h2>
-              <p className="mt-3 max-w-md text-sm leading-relaxed font-light text-muted-foreground sm:text-base">
-                Lowell is turning it up for Pride this year. Drag, dancing,
-                marching, and more all month long. Don&apos;t miss a thing.
-              </p>
-            </div>
-            <Link
-              href="/pride"
-              className="group inline-flex items-center gap-2 border-2 border-primary bg-primary px-6 py-3 text-xs font-medium tracking-wider text-primary-foreground uppercase transition-colors hover:bg-primary/90"
-            >
-              Explore Pride Events
-              <ArrowRightIcon className="size-3.5 transition-transform group-hover:translate-x-0.5" />
-            </Link>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
 async function FeaturedEvents() {
   const events = await getHomeEvents()
   const featured = filterFeatured(events).slice(0, 4)
@@ -269,10 +209,6 @@ export default function HomePage() {
           Lowell, Massachusetts.
         </p>
       </section>
-
-      <Suspense>
-        <PrideBanner />
-      </Suspense>
 
       <Suspense fallback={<EventsSkeleton count={3} />}>
         <FeaturedEvents />

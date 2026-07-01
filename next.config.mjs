@@ -12,6 +12,7 @@ const nextConfig = {
   async redirects() {
     return [
       { source: '/events', destination: '/calendar', permanent: true },
+      { source: '/pride', destination: '/calendar', permanent: false },
       { source: '/admin', destination: '/', permanent: false },
       { source: '/admin/:path*', destination: '/', permanent: false },
     ];
