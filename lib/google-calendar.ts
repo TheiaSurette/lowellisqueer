@@ -135,7 +135,7 @@ export async function fetchEventById(
   const params = new URLSearchParams({ key: API_KEY })
   const url = `${BASE_URL}/${encodeURIComponent(CALENDAR_ID)}/events/${encodeURIComponent(eventId)}?${params}`
 
-  const response = await fetch(url)
+  const response = await fetch(url, { next: { revalidate: 60 } })
 
   if (!response.ok) {
     if (response.status === 404) return null
