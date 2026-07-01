@@ -1,6 +1,5 @@
 import { Suspense } from "react"
 import { notFound } from "next/navigation"
-import { cacheLife, cacheTag } from "next/cache"
 import { BackButton } from "@/components/back-button"
 import {
   CalendarIcon,
@@ -20,10 +19,6 @@ type PageProps = {
 }
 
 async function getCachedEvent(eventId: string): Promise<CalendarEvent | null> {
-  "use cache"
-  cacheLife("minutes")
-  cacheTag("event-detail", `event-${eventId}`)
-
   return fetchEventById(eventId)
 }
 
