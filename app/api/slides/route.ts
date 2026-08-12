@@ -1,35 +1,54 @@
-import { NextResponse } from "next/server"
+import { type NextRequest, NextResponse } from "next/server"
 import satori from "satori"
 import { Resvg } from "@resvg/resvg-js"
 import { fetchEvents } from "@/lib/google-calendar"
 import { WeeklySlide } from "@/lib/image/weekly-slides"
 import { loadAllFonts } from "@/lib/fonts"
-import { formatWeekRange, TZ } from "@/lib/format"
+import { formatDateRange, TZ } from "@/lib/format"
 
 const EVENTS_PER_SLIDE = 5
 const WIDTH = 1080
 const HEIGHT = 1350
 
-function getMonSunBounds(now = new Date()): { start: Date; end: Date } {
+function getSunSatBounds(now = new Date()): { start: Date; end: Date } {
   const et = new Date(now.toLocaleString("en-US", { timeZone: TZ }))
   const offset = now.getTime() - et.getTime()
   const day = et.getDay()
-  const monday = new Date(et)
-  monday.setDate(et.getDate() - ((day + 6) % 7))
-  monday.setHours(0, 0, 0, 0)
-  const nextMonday = new Date(monday)
-  nextMonday.setDate(monday.getDate() + 7)
+  const sunday = new Date(et)
+  sunday.setDate(et.getDate() - day)
+  sunday.setHours(0, 0, 0, 0)
+  const nextSunday = new Date(sunday)
+  nextSunday.setDate(sunday.getDate() + 7)
   return {
-    start: new Date(monday.getTime() + offset),
-    end: new Date(nextMonday.getTime() + offset),
+    start: new Date(sunday.getTime() + offset),
+    end: new Date(nextSunday.getTime() + offset),
+  }
+}
+
+function parseDateBounds(startStr: string, endStr: string): { start: Date; end: Date } {
+  const now = new Date()
+  const et = new Date(now.toLocaleString("en-US", { timeZone: TZ }))
+  const offset = now.getTime() - et.getTime()
+  const [sy, sm, sd] = startStr.split("-").map(Number)
+  const startLocal = new Date(sy, sm - 1, sd, 0, 0, 0, 0)
+  const [ey, em, ed] = endStr.split("-").map(Number)
+  const endLocal = new Date(ey, em - 1, ed + 1, 0, 0, 0, 0)
+  return {
+    start: new Date(startLocal.getTime() + offset),
+    end: new Date(endLocal.getTime() + offset),
   }
 }
 
 let fontCache: Awaited<ReturnType<typeof loadAllFonts>> | null = null
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const { start, end } = getMonSunBounds()
+    const startParam = request.nextUrl.searchParams.get("start")
+    const endParam = request.nextUrl.searchParams.get("end")
+
+    const { start, end } = startParam && endParam
+      ? parseDateBounds(startParam, endParam)
+      : getSunSatBounds()
 
     const events = await fetchEvents({
       timeMin: start.toISOString(),
@@ -37,8 +56,9 @@ export async function GET() {
       maxResults: 50,
     })
 
-    const weekRange = formatWeekRange(start)
-
+    const lastDay = new Date(end)
+    lastDay.setDate(lastDay.getDate() - 1)
+    const weekRange = formatDateRange(start, lastDay)
     const weekDate = start.toISOString().slice(0, 10)
 
     if (events.length === 0) {

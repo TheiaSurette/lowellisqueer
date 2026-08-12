@@ -66,6 +66,20 @@ export function formatShortDate(date: Date): string {
   return `${month} ${day}`
 }
 
+export function formatDateRange(start: Date, end: Date): string {
+  const startStr = start.toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    timeZone: TZ,
+  })
+  const endStr = end.toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    timeZone: TZ,
+  })
+  return `${startStr} – ${endStr}`
+}
+
 export function formatWeekRange(weekStart: Date): string {
   const end = new Date(weekStart)
   end.setDate(end.getDate() + 6)
