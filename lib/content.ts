@@ -1,6 +1,6 @@
 import fs from "fs/promises"
 import path from "path"
-import type { Meetup, PrideSpotlight, Resource, SocialLink } from "./types"
+import type { Meetup, PrideSpotlight, ResourceCategory, SocialLink } from "./types"
 
 const contentDir = path.join(process.cwd(), "content")
 
@@ -45,8 +45,8 @@ export async function getMeetups(): Promise<Meetup[]> {
   return readJsonContent<Meetup[]>("meetups.json")
 }
 
-export async function getResources(): Promise<Resource[]> {
-  return readJsonContent<Resource[]>("resources.json")
+export async function getResources(): Promise<ResourceCategory[]> {
+  return readJsonContent<ResourceCategory[]>("resources.json")
 }
 
 export async function getPrideSpotlights(): Promise<PrideSpotlight[]> {

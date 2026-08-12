@@ -30,12 +30,19 @@ export default async function ResourcesPage() {
         </div>
       </section>
 
-      <section>
-        <div>
-          {resources.map((resource) => (
-            <ResourceCard key={resource.name} resource={resource} />
-          ))}
-        </div>
+      <section className="mt-10 space-y-12">
+        {resources.map((group) => (
+          <div key={group.category}>
+            <h2 className="mb-2 font-heading text-xl font-bold tracking-tight">
+              {group.category}
+            </h2>
+            <div>
+              {group.items.map((resource) => (
+                <ResourceCard key={resource.name} resource={resource} />
+              ))}
+            </div>
+          </div>
+        ))}
       </section>
     </div>
   )

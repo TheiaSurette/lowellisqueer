@@ -75,3 +75,8 @@ export type Resource = {
   schedule: string
   url: string
 }
+
+export type ResourceCategory = {
+  category: string
+  items: Resource[]
+}
