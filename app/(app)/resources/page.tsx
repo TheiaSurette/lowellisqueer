@@ -33,7 +33,7 @@ export default async function ResourcesPage() {
       <section className="mt-10 space-y-12">
         {resources.map((group) => (
           <div key={group.category}>
-            <h2 className="mb-2 font-heading text-xl font-bold tracking-tight">
+            <h2 className="border-b-2 border-primary pb-2 font-heading text-2xl font-black tracking-tight uppercase">
               {group.category}
             </h2>
             <div>
