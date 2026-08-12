@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { Fraunces, Sora, Geist_Mono } from "next/font/google"
 
+import Script from "next/script"
 import { Analytics } from "@vercel/analytics/next"
 
 import "./globals.css"
@@ -48,6 +49,14 @@ export default function RootLayout({
       <body>
         <ThemeProvider>{children}</ThemeProvider>
         <Analytics />
+        {process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID && (
+          <Script
+            defer
+            src="https://cloud.umami.is/script.js"
+            data-website-id={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
+            strategy="afterInteractive"
+          />
+        )}
       </body>
     </html>
   )
