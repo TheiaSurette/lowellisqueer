@@ -49,7 +49,8 @@ const TILES = {
       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
   },
   dark: {
-    url: "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+    url: "https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png",
+    labels: "https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png",
     attribution:
       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
   },
@@ -112,6 +113,12 @@ export function MapView({ events }: { events: SerializedCalendarEvent[] }) {
       className="h-[600px] w-full overflow-hidden border-2 border-border"
     >
       <TileLayer url={tiles.url} attribution={tiles.attribution} />
+      {"labels" in tiles && (
+        <TileLayer
+          url={(tiles as { labels: string }).labels}
+          className="leaflet-labels-bright"
+        />
+      )}
       <MarkerClusterGroup iconCreateFunction={createClusterIcon}>
         {venues.map((venue) => (
           <Marker
@@ -157,31 +164,31 @@ function VenuePopup({ venue }: { venue: VenueGroup }) {
 
   return (
     <div className="max-w-[240px] font-sans">
-      <p className="mb-2 text-xs font-semibold tracking-wide text-[#A8A29E] uppercase">
+      <p className="mb-2 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
         {venue.location}
       </p>
       <div className="space-y-2">
         {shown.map((group) => (
           <div
             key={group.title}
-            className="border-t border-[#E7E2DD] pt-2 first:border-0 first:pt-0"
+            className="border-t border-border pt-2 first:border-0 first:pt-0"
           >
             <a
               href={`/events/${group.dates[0].id}`}
-              className="text-sm font-bold text-[#E53935] no-underline hover:underline"
+              className="text-sm font-bold text-primary no-underline hover:underline"
             >
               {group.title}
             </a>
             <div className="mt-0.5 space-y-0.5">
               {group.dates.slice(0, 3).map((d) => (
-                <p key={d.id} className="text-xs text-[#78716C]">
+                <p key={d.id} className="text-xs text-muted-foreground">
                   {formatDate(new Date(d.start))}
                   {" · "}
                   {d.isAllDay ? "All day" : formatTime(new Date(d.start))}
                 </p>
               ))}
               {group.dates.length > 3 && (
-                <p className="text-xs text-[#A8A29E]">
+                <p className="text-xs text-muted-foreground/70">
                   +{group.dates.length - 3} more date{group.dates.length - 3 > 1 ? "s" : ""}
                 </p>
               )}
@@ -190,7 +197,7 @@ function VenuePopup({ venue }: { venue: VenueGroup }) {
         ))}
       </div>
       {remaining > 0 && (
-        <p className="mt-2 border-t border-[#E7E2DD] pt-2 text-xs text-[#A8A29E]">
+        <p className="mt-2 border-t border-border pt-2 text-xs text-muted-foreground/70">
           +{remaining} more event{remaining > 1 ? "s" : ""}
         </p>
       )}
