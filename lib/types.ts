@@ -24,6 +24,8 @@ export type SerializedCalendarEvent = {
   description?: string
   imageUrl?: string
   featured?: boolean
+  lat?: number
+  lng?: number
 }
 
 export function serializeEvent(event: CalendarEvent): SerializedCalendarEvent {

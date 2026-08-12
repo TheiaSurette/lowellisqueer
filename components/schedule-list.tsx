@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useMemo, useState, useCallback } from "react"
 import fuzzysort from "fuzzysort"
 import { MapPinIcon, SearchIcon, TagIcon, XIcon } from "lucide-react"
 import {
@@ -11,6 +11,8 @@ import {
 } from "@/lib/format"
 import { spectrumTextColor } from "@/lib/spectrum"
 import { INTERNAL_TAGS } from "@/lib/tags"
+import { DistanceFilter, type DistanceFilterState } from "@/components/distance-filter"
+import { haversineDistance } from "@/lib/geocode"
 import type { SerializedCalendarEvent } from "@/lib/types"
 
 const PAGE_SIZE = 10
@@ -46,8 +48,14 @@ export function ScheduleList({
   const [query, setQuery] = useState("")
   const [page, setPage] = useState(1)
   const [selectedTags, setSelectedTags] = useState<Set<string>>(new Set())
+  const [distanceFilter, setDistanceFilter] = useState<DistanceFilterState | null>(null)
 
   const allTags = useMemo(() => collectTags(events), [events])
+
+  const handleDistanceFilter = useCallback((filter: DistanceFilterState | null) => {
+    setDistanceFilter(filter)
+    setPage(1)
+  }, [])
 
   function toggleTag(tag: string) {
     setSelectedTags((prev) => {
@@ -71,11 +79,18 @@ export function ScheduleList({
       result = result.filter((e) => e.tags.some((t) => selectedTags.has(t)))
     }
 
+    if (distanceFilter) {
+      result = result.filter((e) => {
+        if (!e.lat || !e.lng) return false
+        return haversineDistance(distanceFilter.center, { lat: e.lat, lng: e.lng }) <= distanceFilter.radiusMiles
+      })
+    }
+
     if (!query) return result
     return fuzzysort
       .go(query, result, { keys: ["title", "location"], threshold: 0.3 })
       .map((r) => r.obj)
-  }, [query, events, selectedTags])
+  }, [query, events, selectedTags, distanceFilter])
 
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE)
   const safePage = Math.min(page, totalPages || 1)
@@ -145,7 +160,11 @@ export function ScheduleList({
         </div>
       )}
 
-      {filtered.length === 0 && (query || selectedTags.size > 0) ? (
+      <div className="mb-6">
+        <DistanceFilter onFilterChange={handleDistanceFilter} />
+      </div>
+
+      {filtered.length === 0 && (query || selectedTags.size > 0 || distanceFilter) ? (
         <p className="text-muted-foreground">No events matching your filters</p>
       ) : (
         <div className="space-y-10">
@@ -191,6 +210,11 @@ export function ScheduleList({
                           <div className="mt-1 flex items-center gap-1.5 text-sm font-light text-muted-foreground italic">
                             <MapPinIcon className="size-3 shrink-0" />
                             <span className="truncate">{event.location}</span>
+                            {distanceFilter && event.lat && event.lng && (
+                              <span className="text-xs text-muted-foreground not-italic">
+                                {haversineDistance(distanceFilter.center, { lat: event.lat, lng: event.lng }).toFixed(1)} mi away
+                              </span>
+                            )}
                           </div>
                         )}
                         {(() => {

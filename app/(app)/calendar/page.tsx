@@ -10,6 +10,7 @@ import {
   getEmbedUrl,
 } from "@/lib/google-calendar"
 import { serializeEvent } from "@/lib/types"
+import { geocodeLocations } from "@/lib/geocode-server"
 import { CalendarViewToggle } from "@/components/calendar-view-toggle"
 import { NewsletterSignup } from "@/components/newsletter-signup"
 import { SubmitEventCta } from "@/components/submit-event-cta"
@@ -21,24 +22,37 @@ export const metadata: Metadata = {
   description: "Full calendar of LGBTQ+ events in Lowell, MA",
 }
 
-async function ScheduleView() {
+async function getSerializedEvents() {
   "use cache"
   cacheLife("minutes")
   cacheTag("events")
-
   const events = await fetchEvents({ maxResults: 500 })
-
-  if (events.length === 0) {
-    return (
-      <p className="text-muted-foreground">
-        No upcoming events. Check back soon!
-      </p>
-    )
-  }
-
   const serialized = events.map(serializeEvent)
+  const locations = serialized.map((e) => e.location).filter(Boolean)
+  const coords = await geocodeLocations(locations)
+  for (const event of serialized) {
+    const c = coords.get(event.location)
+    if (c) {
+      event.lat = c.lat
+      event.lng = c.lng
+    }
+  }
+  return serialized
+}
 
-  return <ScheduleList events={serialized} />
+async function CalendarContent({ embedUrl }: { embedUrl: string }) {
+  const events = await getSerializedEvents()
+  return events.length === 0 ? (
+    <p className="text-muted-foreground">
+      No upcoming events. Check back soon!
+    </p>
+  ) : (
+    <CalendarViewToggle
+      scheduleView={<ScheduleList events={events} />}
+      embedUrl={embedUrl}
+      events={events}
+    />
+  )
 }
 
 export default function CalendarPage() {
@@ -71,14 +85,9 @@ export default function CalendarPage() {
         </div>
       </div>
 
-      <CalendarViewToggle
-        scheduleView={
-          <Suspense fallback={<ScheduleSkeleton count={8} />}>
-            <ScheduleView />
-          </Suspense>
-        }
-        embedUrl={embedUrl}
-      />
+      <Suspense fallback={<ScheduleSkeleton count={8} />}>
+        <CalendarContent embedUrl={embedUrl} />
+      </Suspense>
 
       <NewsletterSignup />
 
