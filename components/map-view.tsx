@@ -44,7 +44,9 @@ function createClusterIcon(cluster: { getChildCount: () => number }) {
 
 const TILES = {
   light: {
-    url: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+    url: "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png",
+    labels: "https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png",
+    labelsClass: "leaflet-labels-darken",
     attribution:
       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
   },
@@ -116,7 +118,7 @@ export function MapView({ events }: { events: SerializedCalendarEvent[] }) {
       {"labels" in tiles && (
         <TileLayer
           url={(tiles as { labels: string }).labels}
-          className="leaflet-labels-bright"
+          className={"labelsClass" in tiles ? (tiles as { labelsClass: string }).labelsClass : "leaflet-labels-bright"}
         />
       )}
       <MarkerClusterGroup iconCreateFunction={createClusterIcon}>
