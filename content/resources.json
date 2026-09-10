@@ -1,51 +1,5 @@
 [
   {
-    "category": "Health & Wellness",
-    "items": [
-      {
-        "name": "BProud",
-        "description": "Front-Line Services is excited to announce the BProud program to individuals in the LGBTQ+ community across Massachusetts. BProud therapists, who are members of the LGBTQ+ community, help individuals explore their gender and sexual orientation while working on all aspects of the person.",
-        "location": "486 Chestnut St Suite 2, Gardner, MA",
-        "phone": "",
-        "email": "info@frontlinesvs.com",
-        "schedule": "",
-        "url": "https://frontlinesvs.com/front-line-services-expands-providing-direct-behavioral-health-care-with-focus-on-lgbtq-population/"
-      },
-      {
-        "name": "Pathway to Better Health",
-        "description": "Offers patient-centered, compassionate care, specializing in gender-affirming hormone therapy, HIV/STI care, and addiction treatment.",
-        "location": "97 Central Street, Suite 303, Lowell, MA 01852",
-        "phone": "(978) 487-6783",
-        "email": "",
-        "schedule": "",
-        "url": "https://ptbhealth.org/"
-      }
-    ]
-  },
-  {
-    "category": "Support Services",
-    "items": [
-      {
-        "name": "Center For Hope & Healing",
-        "description": "Offers free and confidential support to survivors of sexual violence and their loved ones, including individual counseling, medical, and legal advocacy.",
-        "location": "15 Hurd St, Lowell, MA 01852",
-        "phone": "(978) 452-7721",
-        "email": "",
-        "schedule": "",
-        "url": "https://chhinc.org/"
-      },
-      {
-        "name": "LGBTQ+ Recovery Empowerment Group @ Riverbend",
-        "description": "The goal of the LGBTQ+ Recovery Empowerment Group is to provide a confidential, supportive community to foster participants' well-being in recovery.",
-        "location": "101 Jackson Street, 4th Floor, Lowell, MA 01852",
-        "phone": "",
-        "email": "",
-        "schedule": "Wednesday: 6:00 pm to 7:00 pm",
-        "url": "https://riverbendmv.org/community-based/clinical-support-groups/"
-      }
-    ]
-  },
-  {
     "category": "Community & Events",
     "items": [
       {
@@ -74,6 +28,107 @@
         "email": "info@outstandinglife.org",
         "schedule": "",
         "url": "https://outstandinglife.org/"
+      }
+    ]
+  },
+  {
+    "category": "Health & Wellness",
+    "items": [
+      {
+        "name": "BProud",
+        "description": "Front-Line Services is excited to announce the BProud program to individuals in the LGBTQ+ community across Massachusetts. BProud therapists, who are members of the LGBTQ+ community, help individuals explore their gender and sexual orientation while working on all aspects of the person.",
+        "location": "486 Chestnut St Suite 2, Gardner, MA",
+        "phone": "",
+        "email": "info@frontlinesvs.com",
+        "schedule": "",
+        "url": "https://frontlinesvs.com/front-line-services-expands-providing-direct-behavioral-health-care-with-focus-on-lgbtq-population/"
+      },
+      {
+        "name": "Pathway to Better Health",
+        "description": "Offers patient-centered, compassionate care, specializing in gender-affirming hormone therapy, HIV/STI care, and addiction treatment.",
+        "location": "97 Central Street, Suite 303, Lowell, MA 01852",
+        "phone": "(978) 487-6783",
+        "email": "",
+        "schedule": "",
+        "url": "https://ptbhealth.org/"
+      }
+    ]
+  },
+    {
+    "category": "Queer-run Business & Activities",
+    "items": [
+      {
+        "name": "Inklings Intuitive",
+        "description": "Tarot card readings for real life. Insight and illumination you can use!",
+        "location": "Moonlight & Mindfulness, 91 Mill Street, Unit 7 Dracut, MA 01826",
+        "phone": "",
+        "email": "",
+        "schedule": "",
+        "url": "https://www.facebook.com/profile.php?id=61589845876651&sk=about"
+      },
+      {
+        "name": "Seacoast Stilettos",
+        "description": "Seacoast Stilettos is a mission-driven, trauma-informed dance and movement studio that empowers people of all identities and experience levels through movement.",
+        "location": "47 Newbury St, Peabody, MA 01960",
+        "phone": "",
+        "email": "info@seacoaststilettos.com",
+        "schedule": "",
+        "url": "https://seacoaststilettos.com/"
+      },
+            {
+        "name": "Tavern on High",
+        "description": "Bringing a little of the City to the suburbs of the Merrimack Valley, with innovative drinks and fresh food all set in a casual atmosphere in the historic West Mill in North Andover.",
+        "location": "18 High Street, North Andover, MA 01845",
+        "phone": "978.684.2264",
+        "email": "info@tavernonhigh.com",
+        "schedule": "",
+        "url": "https://www.tavernonhigh.com/"
+      }
+    ]
+  },
+  {
+    "category": "Support Services",
+    "items": [
+      {
+        "name": "Center For Hope & Healing",
+        "description": "Offers free and confidential support to survivors of sexual violence and their loved ones, including individual counseling, medical, and legal advocacy.",
+        "location": "15 Hurd St, Lowell, MA 01852",
+        "phone": "(978) 452-7721",
+        "email": "",
+        "schedule": "",
+        "url": "https://chhinc.org/"
+      },
+      {
+        "name": "LGBTQ+ Recovery Empowerment Group @ Riverbend",
+        "description": "The goal of the LGBTQ+ Recovery Empowerment Group is to provide a confidential, supportive community to foster participants' well-being in recovery.",
+        "location": "101 Jackson Street, 4th Floor, Lowell, MA 01852",
+        "phone": "",
+        "email": "",
+        "schedule": "Wednesday: 6:00 pm to 7:00 pm",
+        "url": "https://riverbendmv.org/community-based/clinical-support-groups/"
+      }
+    ]
+  },
+    {
+    "category": "Youth Services & Support",
+    "items": [
+       {
+        "name": "McVagly",
+        "description": "McVagly is a weekly LGBTQ+ community youth group for high school and college-aged youth 14 – 23 years old.",
+        "location": "Chapel at North Parish, 190 Academy Road North Andover, MA 01845",
+        "phone": "",
+        "email": "tad.bickford@gmail.com",
+        "schedule": "Mondays 6:30-8:30 p.m.",
+        "url": "https://www.instagram.com/mcvagly_ma/"
+      },
+      {
+        "name": "Nashua Outright",
+        "description": "This monthly group is open to LGBTQ+ youth and allies in middle school and high school. There is no sign-up required.",
+        "location": "58 Lowell St, Nashua, NH",
+        "phone": "",
+        "email": "mail@nhoutright.org",
+        "schedule": "3rd Thursdays 6:00-7:00 p.m.",
+        "url": "https://www.nhoutright.org/calendar-events"
       }
     ]
   }
